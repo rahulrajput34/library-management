@@ -1,15 +1,12 @@
 import Header from "@/components/Header";
 import React, { ReactNode } from "react";
 
-// Main layout component for the application
 function layout({ children }: { children: ReactNode }) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8 pb-20 bg-black">
-      <div className="mx-auto max-w-7xl">
-        <Header/>
-        <div className="mt-8 flex flex-col items-center justify-center gap-8">
-          {children}
-        </div>
+    <main className="min-h-screen bg-[#0a1424] bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#0d1d35] via-[#0c182d] to-[#091221] text-gray-300 antialiased">
+      <div className="mx-auto max-w-7xl px-6 py-10">
+        <Header />
+        <div className="mt-20 pb-20">{children}</div>
       </div>
     </main>
   );
