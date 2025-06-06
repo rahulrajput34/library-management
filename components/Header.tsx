@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -10,24 +9,22 @@ const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="my-10 flex justify-between gap-5">
+    <header className="mb-12 flex items-center justify-between">
       <Link href="/">
-        <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
+        <Image src="/icons/logo.svg" alt="logo" width={42} height={42} />
       </Link>
 
-      <ul className="flex flex-row items-center gap-8">
-        <li>
-          <Link
-            href="/library"
-            className={cn(
-              "text-base cursor-pinter capitalize",
-              pathname === "/library" ? "text-gray-200" : "text-gray-400"
-            )}
-          >
-            Library
-          </Link>
-        </li>
-      </ul>
+      <nav>
+        <Link
+          href="/library"
+          className={cn(
+            "text-sm font-medium transition-colors hover:text-gray-100",
+            pathname === "/library" ? "text-gray-100" : "text-gray-400"
+          )}
+        >
+          Library
+        </Link>
+      </nav>
     </header>
   );
 };
