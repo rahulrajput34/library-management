@@ -11,7 +11,13 @@ const Header = () => {
   return (
     <header className="mb-12 flex items-center justify-between">
       <Link href="/">
-        <Image src="/icons/logo.svg" alt="logo" width={42} height={42} />
+        <Image
+          src="/icons/logo.svg"
+          alt="logo"
+          width={42}
+          height={42}
+          className="object-contain"
+        />
       </Link>
 
       <nav>
