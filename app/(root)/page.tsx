@@ -7,8 +7,8 @@ export default function Home() {
     <>
       <BookOverview {...sampleBooks[0]} />
       <BookList
-        title="Popular Books"
-        books={sampleBooks.slice(1, 8)}
+        title="Latest Books"
+        books={sampleBooks.slice(0, 9)}
         containerClassName="mt-20"
       />
     </>
