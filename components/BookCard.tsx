@@ -39,6 +39,7 @@ const BookCard = ({
                 alt="calendar"
                 width={18}
                 height={18}
+                className="object-contain"
               />
               <span>11 days left to return</span>
             </div>
