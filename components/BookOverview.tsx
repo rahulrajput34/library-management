@@ -42,7 +42,13 @@ const BookOverview = ({
         </p>
         <span className="hidden sm:block">•</span>
         <div className="flex items-center gap-1">
-          <Image src="/icons/star.svg" alt="rating" width={18} height={18} />
+          <Image
+            src="/icons/star.svg"
+            alt="rating"
+            width={18}
+            height={18}
+            className="object-contain"
+          />
           <span>{rating.toFixed(1)}/5</span>
         </div>
       </div>
@@ -61,7 +67,13 @@ const BookOverview = ({
       <p className="max-w-prose text-gray-300">{description}</p>
 
       <Button className="mt-4 w-fit gap-2 bg-[#10192e] px-6 py-3 font-bebas-neue text-lg hover:bg-[#1c2640]">
-        <Image src="/icons/book.svg" alt="" width={18} height={18} />
+        <Image
+          src="/icons/book.svg"
+          alt=""
+          width={18}
+          height={18}
+          className="object-contain bg-white"
+        />
         Borrow Book
       </Button>
     </div>
@@ -74,7 +86,7 @@ const BookOverview = ({
       <BookCover
         coverImage={cover}
         coverColor={color}
-        className="absolute left-10 top-8 -z-10 rotate-12 opacity-40 blur-[2px] max-sm:hidden"
+        className="absolute left-10 top-8 -z-10 rotate-12 opacity-40 blur-[2px]"
       />
     </div>
   </section>
