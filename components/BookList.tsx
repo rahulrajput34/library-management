@@ -16,7 +16,7 @@ const BookList = ({ title, books, containerClassName }: Props) => {
         {title}
       </h2>
 
-      <ul className="mt-6 flex flex-nowrap gap-8 md:gap-12 overflow-x-auto pb-2 scrollbar-hide">
+      <ul className="mt-6 flex flex-nowrap gap-8 md:gap-12 overflow-x-auto pb-2 no-scrollbar">
         {books.map((book) => (
           <BookCard key={book.id ?? book.title} {...book} />
         ))}
