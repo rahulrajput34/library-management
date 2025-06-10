@@ -1,38 +1,31 @@
 import React from "react";
-import { ReactNode } from "react";
 import Image from "next/image";
 
-const layout = ({ children }: { children: ReactNode }) => {
-  return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-light-200 text-dark-100">
-      <section className="flex flex-col items-center justify-center w-full max-w-md px-4 py-8 space-y-6 bg-white rounded-lg shadow-md">
-        <div className="flex items-center justify-center w-16 h-16 mb-4 bg-light-100 rounded-full">
-          <Image
-            src="/icons/logo.svg"
-            alt="BookWise Logo"
-            width={37}
-            height={37}
-            className="object-contain"
-          />
-          <h1>
-            <span className="text-2xl font-bold text-dark-100">BookWise</span>
-          </h1>
-        </div>
-        <div>
-            {children}
-        </div>
-      </section>
-      <section className="mt-8 text-sm text-gray-500">
+const layout = ({ children }: { children: React.ReactNode }) => (
+  <main className="flex w-full min-h-screen bg-[#101828] py-8">
+    <section className="flex flex-col justify-center w-full md:max-w-lg lg:max-w-xl px-8 md:px-12 lg:px-16 bg-[#101828]">
+      <header className="flex items-center gap-3 mb-10">
         <Image
-          src="/images/auth-illustration.png"
-            alt="Authentication Illustration"
-            width={1000}
-            height={1000}
-            className="size-full object-cover"
+          src="/icons/logo.svg"
+          alt="BookWise Logo"
+          width={32}
+          height={32}
+          className="object-contain"
         />
-        </section>
-    </main>
-  );
-};
+        <h1 className="text-2xl font-bold text-white">BookWise</h1>
+      </header>
+      {children}
+    </section>
+
+    <section className="relative flex-1 hidden md:block">
+      <Image
+        src="/images/auth-illustration.png"
+        alt="Authentication Illustration"
+        fill
+        className="object-cover"
+      />
+    </section>
+  </main>
+);
 
 export default layout;
