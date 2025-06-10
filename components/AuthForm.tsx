@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/form";
 import ImageUpload from "./ImageUpload";
 
-// Import the schemas from your validation files
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
   defaultValues: T;
@@ -33,7 +32,6 @@ interface Props<T extends FieldValues> {
   type: "SIGN_IN" | "SIGN_UP";
 }
 
-// Define the form schema type
 const AuthForm = <T extends FieldValues>({
   type,
   schema,
@@ -47,20 +45,26 @@ const AuthForm = <T extends FieldValues>({
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  const handleSubmit: SubmitHandler<T> = async (data) => {};
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    await onSubmit(data);
+  };
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
-      <h1 className="text-2xl font-bold text-center">
-        {isSignIn ? "Welcome Back!" : "Create an Account"}
-      </h1>
-      <p className="text-center text-muted-foreground">
+    <div className="w-full space-y-8">
+      <h2 className="text-2xl lg:text-3xl font-bold text-white">
+        {isSignIn
+          ? "Welcome Back to the BookWise"
+          : "Create Your Library Account"}
+      </h2>
+
+      <p className="text-sm leading-relaxed text-gray-400">
         {isSignIn
           ? "Access the vast collection of resources, and stay updated"
           : "Please complete all fields and upload a valid university ID to gain access to the library"}
       </p>
+
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           {Object.keys(defaultValues).map((field) => (
             <FormField
               control={form.control}
@@ -68,7 +72,7 @@ const AuthForm = <T extends FieldValues>({
               key={field}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="capitalize">
+                  <FormLabel className="text-sm font-semibold text-gray-200 capitalize">
                     {FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
                   </FormLabel>
                   <FormControl>
@@ -81,7 +85,7 @@ const AuthForm = <T extends FieldValues>({
                           FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
                         }
                         {...field}
-                        className="w-full"
+                        className="h-12 w-full rounded-md bg-[#1B1E2E] px-4 text-sm text-white placeholder:text-gray-500 border border-transparent focus:border-[#F0D9B1] focus:ring-2 focus:ring-[#F0D9B1] focus:outline-none"
                       />
                     )}
                   </FormControl>
@@ -90,22 +94,25 @@ const AuthForm = <T extends FieldValues>({
               )}
             />
           ))}
-          <Button type="submit" className="w-full">
-            {isSignIn ? "Sign In" : "Sign Up"}
+
+          <Button
+            type="submit"
+            className="h-12 w-full rounded-md bg-[#F0D9B1] text-[#04070F] font-semibold hover:bg-[#e4cfa6]"
+          >
+            {isSignIn ? "Login" : "Sign Up"}
           </Button>
         </form>
       </Form>
-      <p
-        className="
-        text-center text-sm text-muted-foreground mt-4
-      "
-      >
-        {isSignIn ? "Don't have an account? " : "Already have an account? "}
+
+      <p className="text-center text-sm text-gray-400">
+        {isSignIn
+          ? "Don’t have an account already? "
+          : "Have an account already? "}
         <Link
           href={isSignIn ? "/sign-up" : "/sign-in"}
-          className="text-blue-500 font-bold hover:underline"
+          className="text-[#F0D9B1] font-bold"
         >
-          {isSignIn ? "Sign Up" : "Sign In"}
+          {isSignIn ? "Register here" : "Login"}
         </Link>
       </p>
     </div>
