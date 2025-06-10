@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react'
-import AuthForm from '@/components/AuthForm';
-import { signUpSchema } from '@/lib/validation';
+import React from "react";
+import AuthForm from "@/components/AuthForm";
+import { signUpSchema } from "@/lib/validation";
 
 const page = () => (
   <AuthForm
@@ -15,8 +15,8 @@ const page = () => (
       universityId: 0,
       universityCard: "",
     }}
-    onSubmit={() => {}}
+    onSubmit={() => Promise.resolve({ success: true })}
   />
 );
 
-export default page
+export default page;
