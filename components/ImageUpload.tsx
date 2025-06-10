@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const ImageUpload = () => {
-  return (
-    <div>ImageUpload</div>
-  )
-}
+  return <div className="text-gray-100">ImageUpload</div>;
+};
 
-export default ImageUpload
+export default ImageUpload;
