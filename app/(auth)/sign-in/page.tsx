@@ -12,7 +12,7 @@ const page = () => (
       email: "",
       password: "",
     }}
-    onSubmit={() => {}}
+    onSubmit={() => Promise.resolve({ success: true })}
   />
 );
 
