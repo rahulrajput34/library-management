@@ -11,10 +11,12 @@
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
     "@imagekit/next": "^2.1.2",
+    "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "drizzle-orm": "^0.44.2",
     "imagekit": "^6.0.0",
     "lucide-react": "^0.513.0",
     "next": "15.3.3",
@@ -33,10 +35,17 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.1",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "brace-expansion": ">=2.0.1",
+    "minimatch": ">=5.0.0",
+    "glob": "9.3.5",
+    "esbuild": "0.19.1"
   }
 }
