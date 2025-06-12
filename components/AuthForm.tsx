@@ -1,20 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ZodType } from "zod/v4";
+import { ZodType } from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { FIELD_NAMES } from "@/app/constants";
-import { FIELD_TYPES } from "@/app/constants";
-import {
-  DefaultValues,
-  FieldValues,
-  Path,
-  SubmitHandler,
-  useForm,
-  UseFormReturn,
-} from "react-hook-form";
+import { FIELD_NAMES, FIELD_TYPES } from "@/app/constants";
+import FileUpload from "@/components/FileUpload";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import {
   Form,
   FormControl,
@@ -23,7 +17,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import FileUpload from "./FileUpload";
+import {
+  DefaultValues,
+  FieldValues,
+  Path,
+  SubmitHandler,
+  useForm,
+  UseFormReturn,
+} from "react-hook-form";
 
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
@@ -38,6 +39,8 @@ const AuthForm = <T extends FieldValues>({
   defaultValues,
   onSubmit,
 }: Props<T>) => {
+  const router = useRouter();
+
   const isSignIn = type === "SIGN_IN";
 
   const form: UseFormReturn<T> = useForm({
@@ -46,38 +49,61 @@ const AuthForm = <T extends FieldValues>({
   });
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
-    await onSubmit(data);
+    const result = await onSubmit(data);
+
+    if (result.success) {
+      toast({
+        title: "Success",
+        description: isSignIn
+          ? "You have successfully signed in."
+          : "You have successfully signed up.",
+      });
+
+      router.push("/");
+    } else {
+      toast({
+        title: `Error ${isSignIn ? "signing in" : "signing up"}`,
+        description: result.error ?? "An error occurred.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <div className="w-full space-y-8">
-      <h2 className="text-2xl lg:text-3xl font-bold text-white">
-        {isSignIn
-          ? "Welcome Back to the BookWise"
-          : "Create Your Library Account"}
-      </h2>
-
-      <p className="text-sm leading-relaxed text-gray-400">
+    <div className="flex flex-col gap-4">
+      <h1 className="text-2xl font-semibold text-white">
+        {isSignIn ? "Welcome back to BookWise" : "Create your library account"}
+      </h1>
+      <p className="text-light-100">
         {isSignIn
           ? "Access the vast collection of resources, and stay updated"
           : "Please complete all fields and upload a valid university ID to gain access to the library"}
       </p>
-
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="w-full space-y-6"
+        >
           {Object.keys(defaultValues).map((field) => (
             <FormField
+              key={field}
               control={form.control}
               name={field as Path<T>}
-              key={field}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-semibold text-gray-200 capitalize">
+                  <FormLabel className="capitalize">
                     {FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
                   </FormLabel>
                   <FormControl>
                     {field.name === "universityCard" ? (
-                      <FileUpload onFileChange={field.onChange} />
+                      <FileUpload
+                        type="image"
+                        accept="image/*"
+                        placeholder="Upload your ID"
+                        folder="ids"
+                        variant="dark"
+                        onFileChange={field.onChange}
+                      />
                     ) : (
                       <Input
                         required
@@ -85,7 +111,7 @@ const AuthForm = <T extends FieldValues>({
                           FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
                         }
                         {...field}
-                        className="h-12 w-full rounded-md bg-[#1B1E2E] px-4 text-sm text-white placeholder:text-gray-500 border border-transparent focus:border-[#F0D9B1] focus:ring-2 focus:ring-[#F0D9B1] focus:outline-none"
+                        className="form-input"
                       />
                     )}
                   </FormControl>
@@ -95,28 +121,23 @@ const AuthForm = <T extends FieldValues>({
             />
           ))}
 
-          <Button
-            type="submit"
-            className="h-12 w-full rounded-md bg-[#F0D9B1] text-[#04070F] font-semibold hover:bg-[#e4cfa6]"
-          >
-            {isSignIn ? "Login" : "Sign Up"}
+          <Button type="submit" className="form-btn">
+            {isSignIn ? "Sign In" : "Sign Up"}
           </Button>
         </form>
       </Form>
 
-      <p className="text-center text-sm text-gray-400">
-        {isSignIn
-          ? "Don’t have an account already? "
-          : "Have an account already? "}
+      <p className="text-center text-base font-medium">
+        {isSignIn ? "New to BookWise? " : "Already have an account? "}
+
         <Link
           href={isSignIn ? "/sign-up" : "/sign-in"}
-          className="text-[#F0D9B1] font-bold"
+          className="font-bold text-primary"
         >
-          {isSignIn ? "Register here" : "Login"}
+          {isSignIn ? "Create an account" : "Sign in"}
         </Link>
       </p>
     </div>
   );
 };
-
 export default AuthForm;
