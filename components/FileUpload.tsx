@@ -69,18 +69,15 @@ const FileUpload = ({
 
   const onError = (error: any) => {
     console.log(error);
-    toast({
-      title: `${type} upload failed`,
+    toast(`${type} upload failed`, {
       description: `Your ${type} could not be uploaded. Please try again.`,
-      variant: "destructive",
     });
   };
 
   const onSuccess = (res: any) => {
     setFile(res);
     onFileChange(res.filePath);
-    toast({
-      title: `${type} uploaded successfully`,
+    toast(`${type} uploaded successfully`, {
       description: `${res.filePath} uploaded successfully!`,
     });
   };
@@ -88,19 +85,15 @@ const FileUpload = ({
   const onValidate = (file: File) => {
     if (type === "image") {
       if (file.size > 20 * 1024 * 1024) {
-        toast({
-          title: "File size too large",
-          description: "Please upload a file that is less than 20MB in size",
-          variant: "destructive",
+        toast("File size too large", {
+          description: "Please upload a file that is less than 20 MB in size",
         });
         return false;
       }
     } else if (type === "video") {
       if (file.size > 50 * 1024 * 1024) {
-        toast({
-          title: "File size too large",
-          description: "Please upload a file that is less than 50MB in size",
-          variant: "destructive",
+        toast("File size too large", {
+          description: "Please upload a file that is less than 50 MB in size",
         });
         return false;
       }
@@ -147,15 +140,11 @@ const FileUpload = ({
             height={20}
             className="object-contain"
           />
-          <p className={cn("font-medium", styles.placeholder)}>
-            {placeholder}
-          </p>
+          <p className={cn("font-medium", styles.placeholder)}>{placeholder}</p>
         </button>
 
         {file.filePath && (
-          <p className="text-sm text-gray-700 break-all">
-            {file.filePath}
-          </p>
+          <p className="text-sm text-gray-700 break-all">{file.filePath}</p>
         )}
 
         {progress > 0 && progress < 100 && (
