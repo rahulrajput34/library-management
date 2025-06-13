@@ -2,9 +2,10 @@
 
 import React from "react";
 import AuthForm from "@/components/AuthForm";
+import { signInWithCredentials } from "@/lib/actions/auth";
 import { signInSchema } from "@/lib/validation";
 
-const page = () => (
+const Page = () => (
   <AuthForm
     type="SIGN_IN"
     schema={signInSchema}
@@ -12,8 +13,8 @@ const page = () => (
       email: "",
       password: "",
     }}
-    onSubmit={() => Promise.resolve({ success: true })}
+    onSubmit={signInWithCredentials}
   />
 );
 
-export default page;
+export default Page;
