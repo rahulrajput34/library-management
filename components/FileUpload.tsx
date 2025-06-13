@@ -107,7 +107,7 @@ const FileUpload = ({
       urlEndpoint={urlEndpoint}
       authenticator={authenticator}
     >
-      <div className="flex flex-col items-center p-6 space-y-4 rounded-lg border-2 border-dashed border-gray-300 hover:bg-gray-50">
+      <div className="flex flex-col items-center p-6 space-y-4 rounded-lg border-2 border-dashed border-gray-300">
         <IKUpload
           ref={ikUploadRef}
           onError={onError}
