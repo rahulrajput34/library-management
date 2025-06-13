@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
+import { Session } from "next-auth";
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 
-const Header = () => {
+const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
 
   return (
@@ -19,18 +21,28 @@ const Header = () => {
           className="object-contain"
         />
       </Link>
-
-      <nav>
-        <Link
-          href="/library"
-          className={cn(
-            "text-sm font-medium transition-colors hover:text-gray-100",
-            pathname === "/library" ? "text-gray-100" : "text-gray-400"
-          )}
-        >
-          Library
-        </Link>
-      </nav>
+      <div className="flex items-center gap-4">
+        <nav>
+          <Link
+            href="/"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-gray-100",
+              pathname === "/library" ? "text-gray-100" : "text-gray-400"
+            )}
+          >
+            Library
+          </Link>
+        </nav>
+        <nav>
+          <Link href="/my-profile" className="text-sm font-medium">
+            <Avatar>
+              <AvatarFallback className="bg-amber-100 rounded-4xl p-2 text-gray-950">
+                {getInitials(session.user?.name ?? "")}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
+        </nav>
+      </div>
     </header>
   );
 };
