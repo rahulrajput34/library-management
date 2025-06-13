@@ -1,7 +1,12 @@
+import { auth } from "@/auth";
 import Header from "@/components/Header";
 import React, { ReactNode } from "react";
+import { redirect } from "next/navigation";
 
-function layout({ children }: { children: ReactNode }) {
+const layout = async ({ children }: { children: ReactNode }) => {
+  // if no session redirect to sign in page
+  const session = await auth();
+  if (!session) redirect("/sign-in");
   return (
     <main className="min-h-screen bg-[#0a1424] bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#0d1d35] via-[#0c182d] to-[#091221] text-gray-300 antialiased">
       <div className="mx-auto max-w-7xl px-6 py-10">
@@ -10,6 +15,6 @@ function layout({ children }: { children: ReactNode }) {
       </div>
     </main>
   );
-}
+};
 
 export default layout;
