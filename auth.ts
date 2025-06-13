@@ -5,6 +5,7 @@ import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
 
+// Sign-in User
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
