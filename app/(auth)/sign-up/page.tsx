@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
 import AuthForm from "@/components/AuthForm";
+import { signUp } from "@/lib/actions/auth";
 import { signUpSchema } from "@/lib/validation";
 
-const page = () => (
+const Page = () => (
   <AuthForm
     type="SIGN_UP"
     schema={signUpSchema}
@@ -15,8 +15,8 @@ const page = () => (
       universityId: 0,
       universityCard: "",
     }}
-    onSubmit={() => Promise.resolve({ success: true })}
+    onSubmit={signUp}
   />
 );
 
-export default page;
+export default Page;
