@@ -7,12 +7,25 @@ import { success } from "zod/v4";
 import { error } from "console";
 import { hash } from "bcryptjs";
 import { signIn } from "@/auth";
+import { headers } from "next/headers";
+import ratelimit from "../ratelimit";
+import { redirect } from "next/navigation";
 
 // SignIn and validation param using same AuthCredentials after picking from it
 export const signInWithCredentials = async (
   params: Pick<AuthCredentials, "email" | "password">
 ) => {
   const { email, password } = params;
+
+  // get ip address
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+
+  // check if the user is rate limited
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return redirect("/too-fast");
+  }
 
   try {
     // we want to sign in with credentials method with passing the email and password
@@ -40,6 +53,16 @@ export const signInWithCredentials = async (
 export const signUp = async (params: AuthCredentials) => {
   const { fullName, email, password, universityId, universityCard } = params;
 
+  // get ip address
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+
+  // check if the user is rate limited
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return redirect("/too-fast");
+  }
+
   // check if the user already exits
   const existingUser = await db
     .select()
@@ -66,9 +89,7 @@ export const signUp = async (params: AuthCredentials) => {
     });
 
     // let use log in as well
-    await signInWithCredentials(
-        { email, password}
-    );
+    await signInWithCredentials({ email, password });
 
     return { success: true };
   } catch (error) {
