@@ -48,11 +48,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/sign-in",   // where we giving the auth
+    signIn: "/sign-in", // where we giving the auth
   },
   callbacks: {
     async jwt({ token, user }) {
-        // if  user exits set the token values and return it
+      // if  user exits set the token values and return it
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -61,7 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     async session({ session, token }) {
-        // if session exits set the value of session and return it
+      // if session exits set the value of session and return it
       if (session.user) {
         session.user.id = token.id as string;
         session.user.name = token.name as string;
