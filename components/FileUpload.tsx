@@ -14,7 +14,6 @@ const {
   },
 } = config;
 
-// authentication
 const authenticator = async () => {
   try {
     const response = await fetch(`${config.env.apiEndpoint}/api/auth/imagekit`);
