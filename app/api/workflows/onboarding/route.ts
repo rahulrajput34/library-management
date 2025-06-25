@@ -2,7 +2,7 @@ import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { serve } from "@upstash/workflow/nextjs";
 import { eq } from "drizzle-orm";
-import { sendEmailImmediate } from "@/lib/workflow";
+import { sendEmail } from "@/lib/workflow";
 
 type UserState = "non-active" | "active";
 
@@ -48,7 +48,7 @@ export const { POST } = serve<InitialData>(async (context) => {
 
   // welcome email
   await context.run("new-signup", async () => {
-    await sendEmailImmediate({
+    await sendEmail({
       email,
       subject: "Welcome to Library Management",
       message: `
@@ -59,7 +59,6 @@ export const { POST } = serve<InitialData>(async (context) => {
               <li>Explore our collection of books, magazines, and other resources.</li>
               <li>Sign up for our newsletter to stay updated on the latest news and events.</li>
               <li>Join our community and connect with other members.</li>`,
-      name: fullName,
     });
   });
 
@@ -75,7 +74,7 @@ export const { POST } = serve<InitialData>(async (context) => {
 
     if (state === "non-active") {
       await context.run("send-email-non-active", async () => {
-        await sendEmailImmediate({
+        await sendEmail({
           email,
           subject: "Are you still interested in Library Management?",
           message: `
@@ -93,12 +92,11 @@ export const { POST } = serve<InitialData>(async (context) => {
               <p>Best regards,</p>
               <p>The Library Management Team</p>
           `,
-          name: fullName,
         });
       });
     } else if (state === "active") {
       await context.run("send-email-active", async () => {
-        await sendEmailImmediate({
+        await sendEmail({
           email,
           subject: "Welcome back to Library Management!",
           message: `
@@ -115,7 +113,6 @@ export const { POST } = serve<InitialData>(async (context) => {
                 <p>Best regards,</p>
                 <p>The Library Management Team</p>
           `,
-          name: fullName,
         });
       });
     }
