@@ -29,6 +29,7 @@ export const sendEmail = async ({
       provider: resend({ token: config.env.resendToken }),
     },
     body: {
+      // TODO: The emails must be a professional email address
       from: "Library Management <rajputrahul18112510@gmail.com>",
       to: [email],
       subject,
