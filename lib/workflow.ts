@@ -1,37 +1,38 @@
 import { Client as WorkflowClient } from "@upstash/workflow";
+import { Client as QStashClient, resend } from "@upstash/qstash";
 import config from "@/lib/config";
 
-// passing envs for client
+// setup the workflow client
 export const workflowClient = new WorkflowClient({
   baseUrl: config.env.upstash.qstashUrl,
   token: config.env.upstash.qstashToken,
 });
 
-interface SendEmailArgs {
-  email: string;
-  subject: string;
-  message: string;
-  name?: string;
-}
+// setup the qstash client
+const qstashClient = new QStashClient({
+  token: config.env.upstash.qstashToken,
+});
 
+// setup the send email using the qstash with resend email
 export const sendEmail = async ({
   email,
   subject,
   message,
-  name = email.split("@")[0],
-}: SendEmailArgs) => {
-  const serviceId = config.env.emailJs.serviceId;
-  const templateId = config.env.emailJs.templateId;
-  const publicKey = config.env.emailJs.publicKey;
-
-  // Map fields to the placeholders used in your EmailJS template.
-  const params = {
-    user_name: name,
-    user_email: email,
-    subject,
-    message,
-  };
-
-  // send the email
-  await emailjs.send(serviceId, templateId, params, { publicKey });
+}: {
+  email: string;
+  subject: string;
+  message: string;
+}) => {
+  await qstashClient.publishJSON({
+    api: {
+      name: "email",
+      provider: resend({ token: config.env.resendToken }),
+    },
+    body: {
+      from: "JS Mastery <contact@adrianjsmastery.com>",
+      to: [email],
+      subject,
+      html: message,
+    },
+  });
 };
