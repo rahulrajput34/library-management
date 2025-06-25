@@ -1,6 +1,5 @@
 import { Client as WorkflowClient } from "@upstash/workflow";
 import config from "@/lib/config";
-import emailjs from "@emailjs/browser";
 
 // passing envs for client
 export const workflowClient = new WorkflowClient({
