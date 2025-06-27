@@ -8,12 +8,14 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
+// envs for imagekit
 const {
   env: {
     imagekit: { publicKey, urlEndpoint },
   },
 } = config;
 
+// fetch authentication signature, expiry and token from imagekit api
 const authenticator = async () => {
   try {
     const response = await fetch(`${config.env.apiEndpoint}/api/auth/imagekit`);
@@ -33,6 +35,7 @@ const authenticator = async () => {
   }
 };
 
+// file upload props
 interface Props {
   type: "image" | "video";
   accept: string;
@@ -43,6 +46,7 @@ interface Props {
   value?: string;
 }
 
+// file upload component
 const FileUpload = ({
   type,
   accept,
@@ -52,12 +56,16 @@ const FileUpload = ({
   onFileChange,
   value,
 }: Props) => {
+  // ref to trigger file IKUpload component
   const ikUploadRef = useRef(null);
+
+  // file path and progress state
   const [file, setFile] = useState<{ filePath: string | null }>({
     filePath: value ?? null,
   });
   const [progress, setProgress] = useState(0);
 
+  // css
   const styles = {
     button:
       variant === "dark"
@@ -67,6 +75,7 @@ const FileUpload = ({
     text: "text-gray-700",
   };
 
+  // handle file upload errors
   const onError = (error: any) => {
     console.log(error);
     toast(`${type} upload failed`, {
@@ -74,6 +83,7 @@ const FileUpload = ({
     });
   };
 
+  // handle file upload success
   const onSuccess = (res: any) => {
     setFile(res);
     onFileChange(res.filePath);
@@ -82,6 +92,7 @@ const FileUpload = ({
     });
   };
 
+  // validate file type before upload
   const onValidate = (file: File) => {
     if (type === "image") {
       if (file.size > 20 * 1024 * 1024) {
@@ -102,12 +113,14 @@ const FileUpload = ({
   };
 
   return (
+    // wrapping upload UI in ImageKitProvider for authentication
     <ImageKitProvider
       publicKey={publicKey}
       urlEndpoint={urlEndpoint}
       authenticator={authenticator}
     >
       <div className="flex flex-col items-center p-6 space-y-4 rounded-lg border-2 border-dashed border-gray-300">
+        {/* handles file selection and uploading */}
         <IKUpload
           ref={ikUploadRef}
           onError={onError}
@@ -123,6 +136,7 @@ const FileUpload = ({
           className="hidden"
         />
 
+        {/* Button to trigger file selection dialog */}
         <button
           className={cn("flex items-center space-x-2", styles.button)}
           onClick={(e) => {
@@ -133,6 +147,7 @@ const FileUpload = ({
             }
           }}
         >
+          {/* Upload icon with placeholder text */}
           <Image
             src="/icons/upload.svg"
             alt="upload-icon"
@@ -143,10 +158,12 @@ const FileUpload = ({
           <p className={cn("font-medium", styles.placeholder)}>{placeholder}</p>
         </button>
 
+        {/* displays the uploaded file path */}
         {file.filePath && (
           <p className="text-sm text-gray-700 break-all">{file.filePath}</p>
         )}
 
+        {/* Progress bar */}
         {progress > 0 && progress < 100 && (
           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
@@ -155,7 +172,7 @@ const FileUpload = ({
             />
           </div>
         )}
-
+        {/* Image preview */}
         {file.filePath && type === "image" && (
           <IKImage
             alt={file.filePath}
@@ -165,7 +182,7 @@ const FileUpload = ({
             className="mt-4 rounded-lg shadow-lg"
           />
         )}
-
+        {/* Video preview */}
         {file.filePath && type === "video" && (
           <IKVideo
             path={file.filePath}
