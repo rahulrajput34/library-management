@@ -25,10 +25,10 @@ const Sidebar = ({ session }: { session: Session }) => {
           <h1>BookWise</h1>
         </div>
 
-        {/* Sidebar links */}
+        {/* Sidebar routes */}
         <div className="mt-10 flex flex-col gap-5">
           {adminSideBarLinks.map((link) => {
-            // map on each link and return a link component
+            // check if the current route is selected
             const isSelected =
               (link.route !== "/admin" &&
                 pathname.includes(link.route) &&
@@ -36,16 +36,16 @@ const Sidebar = ({ session }: { session: Session }) => {
               pathname === link.route;
 
             return (
-              // navigation Link for each sidebar item
+              // navigation routes for each sidebar item
               <Link href={link.route} key={link.route}>
-                {/* Sidebar link container */}
+                {/* Sidebar routes container */}
                 <div
                   className={cn(
                     "link",
                     isSelected && "bg-primary-admin shadow-sm"
                   )}
                 >
-                  {/* Icon for the sidebar link */}
+                  {/* Icon for the sidebar routes */}
                   <div className="relative size-5">
                     <Image
                       src={link.img}
@@ -56,7 +56,7 @@ const Sidebar = ({ session }: { session: Session }) => {
                       }  object-contain`}
                     />
                   </div>
-                  {/* Sidebar link texts */}
+                  {/* Sidebar routes texts */}
                   <p className={cn(isSelected ? "text-white" : "text-dark")}>
                     {link.text}
                   </p>
