@@ -4,6 +4,7 @@ const Header = ({ session }: { session: Session }) => {
   return (
     <header className="admin-header">
       <div>
+        {/* ger user details from next auth session */}
         <h2 className="text-2xl font-semibold text-dark-400">
           {session?.user?.name}
         </h2>
@@ -11,8 +12,6 @@ const Header = ({ session }: { session: Session }) => {
           Monitor all of your users and books here
         </p>
       </div>
-
-      {/*<p>Search</p>*/}
     </header>
   );
 };
