@@ -14,7 +14,7 @@ const ColorPicker = ({ value, onPickerChange }: Props) => {
         <HexColorInput
           color={value}
           onChange={onPickerChange}
-          className="hex-input"
+          className="h-full flex-1 bg-transparent font-ibm-plex-sans outline-none"
         />
       </div>
       <HexColorPicker color={value} onChange={onPickerChange} />
