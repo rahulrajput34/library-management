@@ -84,7 +84,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   required
                   placeholder="Book title"
                   {...field}
-                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
+                  className="min-h-14 border border-gray-100 bg-gray-100 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -105,7 +105,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   required
                   placeholder="Book author"
                   {...field}
-                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
+                  className="min-h-14 border border-gray-100 bg-gray-100 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -126,7 +126,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   required
                   placeholder="Book genre"
                   {...field}
-                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
+                  className="min-h-14 border border-gray-100 bg-gray-100 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -149,7 +149,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   max={5}
                   placeholder="Book rating"
                   {...field}
-                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
+                  className="min-h-14 border border-gray-100 bg-gray-100 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -172,7 +172,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   max={10000}
                   placeholder="Total copies"
                   {...field}
-                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
+                  className="min-h-14 border border-gray-100 bg-gray-100 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -194,7 +194,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   accept="image/*"
                   placeholder="Upload a book cover"
                   folder="books/covers"
-                  variant="light"
+                  variant="white"
                   onFileChange={field.onChange}
                   value={field.value}
                 />
@@ -236,7 +236,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   placeholder="Book description"
                   {...field}
                   rows={10}
-                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
+                  className="min-h-14 border border-gray-100 bg-gray-100 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
 
@@ -259,7 +259,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   accept="video/*"
                   placeholder="Upload a book trailer"
                   folder="books/videos"
-                  variant="light"
+                  variant="white"
                   onFileChange={field.onChange}
                   value={field.value}
                 />
@@ -282,7 +282,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   placeholder="Book summary"
                   {...field}
                   rows={5}
-                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
+                  className="min-h-14 border border-gray-100 bg-gray-100 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
 

@@ -78,7 +78,7 @@ const Sidebar = ({ session }: { session: Session }) => {
         {/* user details coming from next auth session */}
         <div className="flex flex-col max-md:hidden">
           <p className="font-semibold text-dark-200">{session?.user?.name}</p>
-          <p className="text-xs text-light-500">{session?.user?.email}</p>
+          <p className="text-xs text-gray-50">{session?.user?.email}</p>
         </div>
       </div>
     </div>
