@@ -8,6 +8,7 @@ interface Props {
 }
 
 const BookList = ({ title, books, containerClassName }: Props) => {
+  // if the user has less than 2 books, don't show anything
   if (books.length < 2) return null;
 
   return (
