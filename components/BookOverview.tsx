@@ -9,11 +9,11 @@ interface Book {
   author: string;
   genre: string;
   rating: number;
-  total_copies: number;
-  available_copies: number;
+  totalCopies: number;
+  availableCopies: number;
   description: string;
-  cover: string;
-  color: string;
+  coverUrl: string;
+  coverColor: string;
 }
 
 const BookOverview = ({
@@ -21,11 +21,11 @@ const BookOverview = ({
   author,
   genre,
   rating,
-  total_copies,
-  available_copies,
+  totalCopies,
+  availableCopies,
   description,
-  cover,
-  color,
+  coverUrl,
+  coverColor,
 }: Book) => (
   <section className="relative grid gap-12 rounded-xl bg-gradient-to-br from-[#0e2038] to-[#0b1628] p-10 text-gray-100 shadow-lg lg:grid-cols-2">
     {/* left column */}
@@ -56,11 +56,11 @@ const BookOverview = ({
       <div className="flex flex-wrap gap-6 text-sm text-gray-300">
         <p>
           Total books:{" "}
-          <span className="font-semibold text-white">{total_copies}</span>
+          <span className="font-semibold text-white">{totalCopies}</span>
         </p>
         <p>
           Available:{" "}
-          <span className="font-semibold text-white">{available_copies}</span>
+          <span className="font-semibold text-white">{availableCopies}</span>
         </p>
       </div>
 
@@ -78,14 +78,14 @@ const BookOverview = ({
       </Button>
     </div>
 
-    {/* right column – cover & reflection */}
+    {/* right column – coverUrl & reflection */}
     <div className="relative flex items-center justify-center">
-      <BookCover coverImage={cover} coverColor={color} />
+      <BookCover coverImage={coverUrl} coverColor={coverColor} />
 
       {/* blurred reflection */}
       <BookCover
-        coverImage={cover}
-        coverColor={color}
+        coverImage={coverUrl}
+        coverColor={coverColor}
         className="absolute left-10 top-8 -z-10 rotate-12 opacity-40 blur-[2px]"
       />
     </div>
