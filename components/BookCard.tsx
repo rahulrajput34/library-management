@@ -26,14 +26,14 @@ const BookCard = ({
       >
         <BookCover coverColor={color} coverImage={cover} />
 
-        <p className="mt-4 text-sm leading-tight font-medium text-light-100 line-clamp-2 text-center">
+        <p className="mt-4 text-sm leading-tight font-medium text-gray-100 line-clamp-2 text-center">
           {title}
         </p>
         <p className="mt-1 text-xs italic text-zinc-400">{genre}</p>
 
         {isLoanedBook && (
           <div className="mt-4 w-full space-y-3">
-            <div className="flex items-center gap-2 text-xs text-light-100">
+            <div className="flex items-center gap-2 text-xs text-gray-100">
               <Image
                 src="/icons/calendar.svg"
                 alt="calendar"

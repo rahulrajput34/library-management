@@ -12,7 +12,7 @@ const BookList = ({ title, books, containerClassName }: Props) => {
 
   return (
     <section className={containerClassName}>
-      <h2 className="font-bebas-neue text-3xl md:text-4xl text-light-100">
+      <h2 className="font-bebas-neue text-3xl md:text-4xl text-gray-100">
         {title}
       </h2>
 

@@ -41,7 +41,7 @@ interface Props {
   accept: string;
   placeholder: string;
   folder: string;
-  variant: "dark" | "light";
+  variant: "dark" | "white";
   onFileChange: (filePath: string) => void;
   value?: string;
 }
