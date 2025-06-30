@@ -1,19 +1,30 @@
-import BookOverview from "@/components/BookOverview";
 import BookList from "@/components/BookList";
-import { sampleBooks } from "../constants";
-import { users } from "@/database/schema";
+import BookOverview from "@/components/BookOverview";
 import { db } from "@/database/drizzle";
+import { books, users } from "@/database/schema";
+import { auth } from "@/auth";
+import { desc } from "drizzle-orm";
 
 const Home = async () => {
-  const result = await db.select().from(users);
-  console.log(JSON.stringify(result, null, 2));
+  // get user session
+  const session = await auth();
+
+  // get latest books
+  const latestBooks = (await db
+    .select()
+    .from(books)
+    .limit(10)
+    .orderBy(desc(books.createdAt))) as Book[];
+
   return (
     <>
-      <BookOverview {...sampleBooks[0]} />
+      {/* book overview userId for the user that is logged in */}
+      <BookOverview {...latestBooks[0]} userId={session?.user?.id as string} />
+      {/* book list for the latest books */}
       <BookList
         title="Latest Books"
-        books={sampleBooks.slice(0, 9)}
-        containerClassName="mt-20"
+        books={latestBooks.slice(1)}
+        containerClassName="mt-28"
       />
     </>
   );
