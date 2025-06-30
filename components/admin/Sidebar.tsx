@@ -12,7 +12,7 @@ const Sidebar = ({ session }: { session: Session }) => {
   const pathname = usePathname();
 
   return (
-    <div className="admin-sidebar">
+    <div className="sticky left-0 top-0 flex h-dvh flex-col justify-between bg-white px-5 pb-5 pt-10">
       <div>
         {/* Logo and header */}
         <div className="logo">
@@ -42,7 +42,7 @@ const Sidebar = ({ session }: { session: Session }) => {
                 <div
                   className={cn(
                     "link",
-                    isSelected && "bg-primary-admin shadow-sm"
+                    isSelected && "bg-blue-900 shadow-sm"
                   )}
                 >
                   {/* Icon for the sidebar routes */}

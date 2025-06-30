@@ -84,7 +84,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   required
                   placeholder="Book title"
                   {...field}
-                  className="book-form_input"
+                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -105,7 +105,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   required
                   placeholder="Book author"
                   {...field}
-                  className="book-form_input"
+                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -126,7 +126,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   required
                   placeholder="Book genre"
                   {...field}
-                  className="book-form_input"
+                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -149,7 +149,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   max={5}
                   placeholder="Book rating"
                   {...field}
-                  className="book-form_input"
+                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -172,7 +172,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   max={10000}
                   placeholder="Total copies"
                   {...field}
-                  className="book-form_input"
+                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
               <FormMessage />
@@ -236,7 +236,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   placeholder="Book description"
                   {...field}
                   rows={10}
-                  className="book-form_input"
+                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
 
@@ -282,7 +282,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   placeholder="Book summary"
                   {...field}
                   rows={5}
-                  className="book-form_input"
+                  className="min-h-14 border border-gray-100 bg-light-600 p-4 text-base font-semibold placeholder:font-normal placeholder:text-slate-500 !important"
                 />
               </FormControl>
 
@@ -291,7 +291,10 @@ const BookForm = ({ type, ...book }: Props) => {
           )}
         />
         {/* submit button */}
-        <Button type="submit" className="book-form_btn text-white">
+        <Button
+          type="submit"
+          className="min-h-14 w-full bg-blue-900 hover:bg-blue-900/95 !important text-white"
+        >
           Add Book to Library
         </Button>
       </form>
