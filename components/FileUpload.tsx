@@ -65,7 +65,7 @@ const FileUpload = ({
   });
   const [progress, setProgress] = useState(0);
 
-  // css
+  // css according to variant
   const styles = {
     button:
       variant === "dark"
