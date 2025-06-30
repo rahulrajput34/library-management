@@ -1,22 +1,16 @@
-"use client";
-
+import React from "react";
 import Image from "next/image";
-import { Button } from "./ui/button";
-import BookCover from "./BookCover";
+import BookCover from "@/components/BookCover";
+import BorrowBook from "@/components/BorrowBook";
+import { db } from "@/database/drizzle";
+import { users } from "@/database/schema";
+import { eq } from "drizzle-orm";
 
-interface Book {
-  title: string;
-  author: string;
-  genre: string;
-  rating: number;
-  totalCopies: number;
-  availableCopies: number;
-  description: string;
-  coverUrl: string;
-  coverColor: string;
+interface Props extends Book {
+  userId: string;
 }
 
-const BookOverview = ({
+const BookOverview = async ({
   title,
   author,
   genre,
@@ -24,72 +18,90 @@ const BookOverview = ({
   totalCopies,
   availableCopies,
   description,
-  coverUrl,
   coverColor,
-}: Book) => (
-  <section className="relative grid gap-12 rounded-xl bg-gradient-to-br from-[#0e2038] to-[#0b1628] p-10 text-gray-100 shadow-lg lg:grid-cols-2">
-    {/* left column */}
-    <div className="flex flex-col gap-5">
-      <h1 className="font-bebas-neue text-5xl leading-none">{title}</h1>
+  coverUrl,
+  id,
+  userId,
+}: Props) => {
+  // current user to  check if they are eligible to borrow this book
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
 
-      <div className="flex flex-wrap items-center gap-3 text-sm text-gray-300">
-        <p>
-          By <span className="font-semibold text-white">{author}</span>
-        </p>
-        <span className="hidden sm:block">•</span>
-        <p>
-          Category: <span className="font-semibold text-white">{genre}</span>
-        </p>
-        <span className="hidden sm:block">•</span>
-        <div className="flex items-center gap-1">
-          <Image
-            src="/icons/star.svg"
-            alt="rating"
-            width={18}
-            height={18}
-            className="object-contain"
-          />
-          <span>{rating.toFixed(1)}/5</span>
+  // css for the book cover
+  const borrowingEligibility = {
+    isEligible: availableCopies > 0 && user?.status === "APPROVED",
+    message:
+      availableCopies <= 0
+        ? "Book is not available"
+        : "You are not eligible to borrow this book",
+  };
+  return (
+    <section className="relative grid gap-12 rounded-xl bg-gradient-to-br from-[#0e2038] to-[#0b1628] p-10 text-gray-100 shadow-lg lg:grid-cols-2">
+      {/* Book Info */}
+      <div className="flex flex-col gap-5">
+        <h1 className="font-bebas-neue text-5xl leading-none">{title}</h1>
+        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-300">
+          <p>
+            By <span className="font-semibold text-white">{author}</span>
+          </p>
+          <span className="hidden sm:block">•</span>
+          <p>
+            Category: <span className="font-semibold text-white">{genre}</span>
+          </p>
+          <span className="hidden sm:block">•</span>
+          <div className="flex items-center gap-1">
+            <Image
+              src="/icons/star.svg"
+              alt="rating"
+              width={18}
+              height={18}
+              className="object-contain"
+            />
+            <span>
+              {typeof rating === "number" ? rating.toFixed(1) : rating}/5
+            </span>
+          </div>
         </div>
+
+        <div className="flex flex-wrap gap-6 text-sm text-gray-300">
+          <p>
+            Total books:{" "}
+            <span className="font-semibold text-white">{totalCopies}</span>
+          </p>
+          <p>
+            Available:{" "}
+            <span className="font-semibold text-white">{availableCopies}</span>
+          </p>
+        </div>
+
+        <p className="max-w-prose text-gray-300">{description}</p>
+        {/* borrow button */}
+        {user && (
+          <BorrowBook
+            bookId={id}
+            userId={userId}
+            borrowingEligibility={borrowingEligibility}
+          />
+        )}
       </div>
 
-      <div className="flex flex-wrap gap-6 text-sm text-gray-300">
-        <p>
-          Total books:{" "}
-          <span className="font-semibold text-white">{totalCopies}</span>
-        </p>
-        <p>
-          Available:{" "}
-          <span className="font-semibold text-white">{availableCopies}</span>
-        </p>
-      </div>
+      {/* CoverUrl & reflection of book cover image */}
+      <div className="relative flex items-center justify-center">
+        <BookCover variant="xl" coverImage={coverUrl} coverColor={coverColor} />
 
-      <p className="max-w-prose text-gray-300">{description}</p>
-
-      <Button className="mt-4 w-fit gap-2 bg-[#10192e] px-6 py-3 font-bebas-neue text-lg hover:bg-[#1c2640]">
-        <Image
-          src="/icons/book.svg"
-          alt=""
-          width={18}
-          height={18}
-          className="object-contain bg-white"
+        {/* blurred reflection */}
+        <BookCover
+          variant="xl"
+          coverImage={coverUrl}
+          coverColor={coverColor}
+          className="absolute left-10 top-8 -z-10 rotate-12 opacity-40 blur-[2px]"
         />
-        Borrow Book
-      </Button>
-    </div>
-
-    {/* right column – coverUrl & reflection */}
-    <div className="relative flex items-center justify-center">
-      <BookCover coverImage={coverUrl} coverColor={coverColor} />
-
-      {/* blurred reflection */}
-      <BookCover
-        coverImage={coverUrl}
-        coverColor={coverColor}
-        className="absolute left-10 top-8 -z-10 rotate-12 opacity-40 blur-[2px]"
-      />
-    </div>
-  </section>
-);
+      </div>
+    </section>
+  );
+};
 
 export default BookOverview;
