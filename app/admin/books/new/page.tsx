@@ -6,7 +6,7 @@ import BookForm from "@/components/admin/forms/BookForm";
 const Page = () => {
   return (
     <>
-      <Button asChild className="back-btn">
+      <Button asChild className="mb-10 w-fit border border-light-300 bg-white text-xs font-medium text-dark-200 hover:bg-light-300 !important">
         <Link href="/admin/books">Go Back</Link>
       </Button>
 
