@@ -15,14 +15,16 @@ const Sidebar = ({ session }: { session: Session }) => {
     <div className="sticky left-0 top-0 flex h-dvh flex-col justify-between bg-white px-5 pb-5 pt-10">
       <div>
         {/* Logo and header */}
-        <div className="logo">
+        <div className="flex flex-row items-center gap-2 border-b border-dashed border-primary-admin/20 pb-10 max-md:justify-center">
           <Image
             src="/icons/admin/logo.svg"
             alt="logo"
             height={37}
             width={37}
           />
-          <h1>BookWise</h1>
+          <h1 className="text-2xl font-semibold text-primary-admin max-md:hidden">
+            BookWise
+          </h1>
         </div>
 
         {/* Sidebar routes */}
@@ -41,7 +43,7 @@ const Sidebar = ({ session }: { session: Session }) => {
                 {/* Sidebar routes container */}
                 <div
                   className={cn(
-                    "link",
+                    "flex flex-row items-center w-full gap-2 rounded-lg px-5 py-3.5 max-md:justify-center",
                     isSelected && "bg-blue-900 shadow-sm"
                   )}
                 >
@@ -57,7 +59,13 @@ const Sidebar = ({ session }: { session: Session }) => {
                     />
                   </div>
                   {/* Sidebar routes texts */}
-                  <p className={cn(isSelected ? "text-white" : "text-dark")}>
+                  <p
+                    className={cn(
+                      isSelected
+                        ? "text-white text-base font-medium max-md:hidden"
+                        : "text-dark text-base font-medium max-md:hidden"
+                    )}
+                  >
                     {link.text}
                   </p>
                 </div>
@@ -67,7 +75,7 @@ const Sidebar = ({ session }: { session: Session }) => {
         </div>
       </div>
 
-      <div className="user">
+      <div className="my-8 flex w-full flex-row gap-2 rounded-full border border-light-400 px-6 py-2 shadow-sm max-md:px-2">
         {/* user avatar */}
         <Avatar>
           <AvatarFallback className="bg-amber-100">
@@ -78,7 +86,7 @@ const Sidebar = ({ session }: { session: Session }) => {
         {/* user details coming from next auth session */}
         <div className="flex flex-col max-md:hidden">
           <p className="font-semibold text-dark-200">{session?.user?.name}</p>
-          <p className="text-xs text-gray-50">{session?.user?.email}</p>
+          <p className="text-xs text-gray-500">{session?.user?.email}</p>
         </div>
       </div>
     </div>
