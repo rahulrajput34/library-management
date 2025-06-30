@@ -15,13 +15,14 @@ const Layout = async ({ children }: { children: ReactNode }) => {
   // if the user is not logged in, redirect to the sign-in page
   if (!session?.user?.id) redirect("/sign-in");
 
-  // const isAdmin = await db
-  //   .select({ isAdmin: users.role })
-  //   .from(users)
-  //   .where(eq(users.id, session.user.id))
-  //   .limit(1)
-  //   .then((res) => res[0]?.isAdmin === "ADMIN");
-  // if (!isAdmin) redirect("/");
+  // check if the user role is admin for admin page
+  const isAdmin = await db
+    .select({ isAdmin: users.role })
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1)
+    .then((res) => res[0]?.isAdmin === "ADMIN");
+  if (!isAdmin) redirect("/");
 
   return (
     <main className="flex min-h-screen w-full flex-row">
