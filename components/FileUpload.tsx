@@ -41,7 +41,7 @@ interface Props {
   accept: string;
   placeholder: string;
   folder: string;
-  variant: "dark" | "white";
+  variant: "gray" | "white";
   onFileChange: (filePath: string) => void;
   value?: string;
 }
@@ -68,7 +68,7 @@ const FileUpload = ({
   // css according to variant
   const styles = {
     button:
-      variant === "dark"
+      variant === "gray"
         ? "bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg shadow-lg"
         : "bg-white border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg shadow",
     placeholder: "text-gray-500",

@@ -64,14 +64,14 @@ const BorrowBook = ({
   return (
     // Borrowing Button
     <Button
-      className="mt-4 min-h-14 w-fit bg-blue-900 text-dark-100 hover:bg-blue-900/90 max-md:w-full !important"
+      className="mt-4 min-h-14 w-fit bg-blue-900 text-gray-500 hover:bg-blue-900/90 max-md:w-full !important"
       onClick={handleBorrowBook}
       disabled={borrowing}
     >
       {/* book icon */}
       <Image src="/icons/book.svg" alt="book" width={20} height={20} />
       {/* change the btn text according to the current status */}
-      <p className="font-bebas-neue text-xl text-dark-100">
+      <p className="font-bebas-neue text-xl text-gray-500">
         {borrowing ? "Borrowing ..." : "Borrow Book"}
       </p>
     </Button>

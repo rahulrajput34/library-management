@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import "@/styles/admin.css";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";

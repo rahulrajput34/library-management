@@ -2,7 +2,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <main className="flex min-h-screen flex-1 flex-col bg-pattern bg-cover bg-top bg-dark-100 px-5 xs:px-10 md:px-16 items-center justify-center bg-gray-950">
+    <main className="flex min-h-screen flex-1 flex-col bg-pattern bg-cover bg-top bg-gray-500 px-5 xs:px-10 md:px-16 items-center justify-center bg-gray-950">
       <h1 className="font-bebas-neue text-5xl font-bold text-gray-100">
         Whoa, Slow Down There, Speedy!
       </h1>

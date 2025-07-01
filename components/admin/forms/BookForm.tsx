@@ -76,7 +76,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"title"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Book Title
               </FormLabel>
               <FormControl>
@@ -97,7 +97,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"author"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Author
               </FormLabel>
               <FormControl>
@@ -118,7 +118,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"genre"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Genre
               </FormLabel>
               <FormControl>
@@ -139,7 +139,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"rating"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Rating
               </FormLabel>
               <FormControl>
@@ -162,7 +162,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"totalCopies"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Total Copies
               </FormLabel>
               <FormControl>
@@ -185,7 +185,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"coverUrl"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Book Image
               </FormLabel>
               <FormControl>
@@ -209,7 +209,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"coverColor"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Primary Color
               </FormLabel>
               <FormControl>
@@ -228,7 +228,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"description"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Book Description
               </FormLabel>
               <FormControl>
@@ -250,7 +250,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"videoUrl"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Book Trailer
               </FormLabel>
               <FormControl>
@@ -274,7 +274,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"summary"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
+              <FormLabel className="text-base font-normal text-gray-700">
                 Book Summary
               </FormLabel>
               <FormControl>

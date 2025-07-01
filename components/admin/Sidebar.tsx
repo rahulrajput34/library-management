@@ -63,7 +63,7 @@ const Sidebar = ({ session }: { session: Session }) => {
                     className={cn(
                       isSelected
                         ? "text-white text-base font-medium max-md:hidden"
-                        : "text-dark text-base font-medium max-md:hidden"
+                        : "text-gray-800 text-base font-medium max-md:hidden"
                     )}
                   >
                     {link.text}
@@ -75,7 +75,7 @@ const Sidebar = ({ session }: { session: Session }) => {
         </div>
       </div>
 
-      <div className="my-8 flex w-full flex-row gap-2 rounded-full border border-light-400 px-6 py-2 shadow-sm max-md:px-2">
+      <div className="my-8 flex w-full flex-row gap-2 rounded-full border border-gray-400 px-6 py-2 shadow-sm max-md:px-2">
         {/* user avatar */}
         <Avatar>
           <AvatarFallback className="bg-amber-100">
@@ -85,7 +85,7 @@ const Sidebar = ({ session }: { session: Session }) => {
 
         {/* user details coming from next auth session */}
         <div className="flex flex-col max-md:hidden">
-          <p className="font-semibold text-dark-200">{session?.user?.name}</p>
+          <p className="font-semibold text-gray-700">{session?.user?.name}</p>
           <p className="text-xs text-gray-500">{session?.user?.email}</p>
         </div>
       </div>
