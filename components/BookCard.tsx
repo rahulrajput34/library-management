@@ -29,7 +29,7 @@ const BookCard = ({
         <p className="mt-4 text-sm leading-tight font-medium text-gray-100 line-clamp-2 text-center">
           {title}
         </p>
-        <p className="mt-1 text-xs italic text-zinc-400">{genre}</p>
+        <p className="mt-1 text-xs italic text-zinc-400 text-center">{genre}</p>
 
         {isLoanedBook && (
           <div className="mt-4 w-full space-y-3">

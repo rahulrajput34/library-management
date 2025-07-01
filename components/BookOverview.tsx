@@ -39,17 +39,17 @@ const BookOverview = async ({
         : "You are not eligible to borrow this book",
   };
   return (
-    <section className="relative grid gap-12 rounded-xl bg-gradient-to-br from-[#0e2038] to-[#0b1628] p-10 text-gray-100 shadow-lg lg:grid-cols-2">
+    <section className="relative grid gap-12 rounded-2xl p-12 lg:grid lg:grid-cols-2 lg:gap-20">
       {/* Book Info */}
       <div className="flex flex-col gap-5">
-        <h1 className="font-bebas-neue text-5xl leading-none">{title}</h1>
-        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-300">
+        <h1 className="font-bebas-neue text-5xl leading-none font-semibold">{title}</h1>
+        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-100">
           <p>
-            By <span className="font-semibold text-white">{author}</span>
+            By <span className="font-semibold text-amber-100">{author}</span>
           </p>
           <span className="hidden sm:block">•</span>
           <p>
-            Category: <span className="font-semibold text-white">{genre}</span>
+            Category: <span className="font-semibold text-amber-100">{genre}</span>
           </p>
           <span className="hidden sm:block">•</span>
           <div className="flex items-center gap-1">
@@ -60,8 +60,11 @@ const BookOverview = async ({
               height={18}
               className="object-contain"
             />
+            <span className="text-amber-100">
+              {typeof rating === "number" ? rating.toFixed(1) : rating}
+            </span>
             <span>
-              {typeof rating === "number" ? rating.toFixed(1) : rating}/5
+              / 5
             </span>
           </div>
         </div>
@@ -69,11 +72,11 @@ const BookOverview = async ({
         <div className="flex flex-wrap gap-6 text-sm text-gray-300">
           <p>
             Total books:{" "}
-            <span className="font-semibold text-white">{totalCopies}</span>
+            <span className="font-semibold text-amber-100">{totalCopies}</span>
           </p>
           <p>
             Available:{" "}
-            <span className="font-semibold text-white">{availableCopies}</span>
+            <span className="font-semibold text-amber-100">{availableCopies}</span>
           </p>
         </div>
 
@@ -90,7 +93,7 @@ const BookOverview = async ({
       </div>
 
       {/* CoverUrl & reflection of book cover image */}
-      <div className="relative flex flex-1 justify-center">
+      <div className="relative flex flex-1 justify-center top-12">
         <div className="relative">
           <BookCover
             variant="xl"
@@ -98,7 +101,7 @@ const BookOverview = async ({
             coverColor={coverColor}
             coverImage={coverUrl}
           />
-          <div className="absolute left-16 top-10 rotate-12 opacity-40 max-sm:hidden">
+          <div className="absolute left-16 top-16 rotate-12 opacity-40 max-sm:hidden">
             <BookCover
               variant="xl"
               coverColor={coverColor}
