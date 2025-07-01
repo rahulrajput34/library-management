@@ -89,16 +89,22 @@ const BookOverview = async ({
       </div>
 
       {/* CoverUrl & reflection of book cover image */}
-      <div className="relative flex items-center justify-center">
-        <BookCover variant="xl" coverImage={coverUrl} coverColor={coverColor} />
-
-        {/* blurred reflection */}
-        <BookCover
-          variant="xl"
-          coverImage={coverUrl}
-          coverColor={coverColor}
-          className="absolute left-10 top-8 -z-10 rotate-12 opacity-40 blur-[2px]"
-        />
+      <div className="relative flex flex-1 justify-center">
+        <div className="relative">
+          <BookCover
+            variant="xl"
+            className="z-10"
+            coverColor={coverColor}
+            coverImage={coverUrl}
+          />
+          <div className="absolute left-16 top-10 rotate-12 opacity-40 max-sm:hidden">
+            <BookCover
+              variant="xl"
+              coverColor={coverColor}
+              coverImage={coverUrl}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
