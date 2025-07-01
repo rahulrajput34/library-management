@@ -23,14 +23,14 @@ const BookOverview = async ({
   id,
   userId,
 }: Props) => {
-  // current user to  check if they are eligible to borrow this book
+  // get the user
   const [user] = await db
     .select()
     .from(users)
     .where(eq(users.id, userId))
     .limit(1);
 
-  // css for the book cover
+  // check if the user is  eligible to get the book or not
   const borrowingEligibility = {
     isEligible: availableCopies > 0 && user?.status === "APPROVED",
     message:
@@ -79,6 +79,7 @@ const BookOverview = async ({
 
         <p className="max-w-prose text-gray-300">{description}</p>
         {/* borrow button */}
+        {/* passing which are required for the function */}
         {user && (
           <BorrowBook
             bookId={id}
