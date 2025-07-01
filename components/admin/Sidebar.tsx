@@ -6,7 +6,7 @@ import { cn, getInitials } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Session } from "next-auth";
-import { adminSideBarLinks } from "@/app/constants";
+import { adminSideBarLinks } from "@/constants";
 
 const Sidebar = ({ session }: { session: Session }) => {
   const pathname = usePathname();
