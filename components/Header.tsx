@@ -30,7 +30,7 @@ const Header = ({ session }: { session: Session }) => {
               pathname === "/library" ? "text-gray-100" : "text-gray-400"
             )}
           >
-            Library
+            My Books
           </Link>
         </nav>
         <nav>
