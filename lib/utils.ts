@@ -13,3 +13,6 @@ export const getInitials = (name: string): string =>
     .join("")
     .toUpperCase()
     .slice(0, 2);
+
+export const getFirstName = (name: string): string =>
+  name.trim().split(/\s+/)[0] || "";
