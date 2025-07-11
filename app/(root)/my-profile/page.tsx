@@ -3,7 +3,7 @@ import { db } from "@/database/drizzle";
 import { users, books, borrowRecords } from "@/database/schema";
 import { eq, asc } from "drizzle-orm";
 import BookList from "@/components/BookList";
-import ProfileForm from "@/components/ProfileForm";
+import ProfilePage from "@/components/profile/ProfilePage";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/auth";
 
@@ -49,10 +49,9 @@ export default async function MyProfilePage() {
     .limit(10);
 
   return (
-    <main className="p-8 space-y-12">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">My profile</h1>
-        {/* Sign-out button  */}
+    <main className="min-h-screen bg-gray-900 text-white p-8">
+      <div className="flex justify-between items-center mb-8">
+        {/* Sign-out form */}
         <form
           action={async () => {
             "use server";
@@ -63,11 +62,11 @@ export default async function MyProfilePage() {
         </form>
       </div>
 
-      {/* Editable profile form*/}
-      <ProfileForm initial={me} />
-
-      {/* Borrowed books */}
-      <BookList title="Borrowed books" books={borrowedBooks} />
+      {/* two-column layout on lg+, single column on mobile */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <ProfilePage initial={me} />
+        <BookList title="Borrowed books" books={borrowedBooks} />
+      </div>
     </main>
   );
 }
