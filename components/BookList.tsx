@@ -13,11 +13,10 @@ const BookList = ({ title, books, containerClassName }: Props) => {
 
   return (
     <section className={containerClassName}>
-      <h2 className="font-mono font-medium text-2xl md:text-4xl text-gray-100">
+      <h2 className="mb-6 font-mono text-3xl font-semibold tracking-tight">
         {title}
       </h2>
-
-      <ul className="mt-6 flex flex-nowrap gap-8 md:gap-12 overflow-x-auto pb-2 no-scrollbar">
+      <ul className="grid gap-y-16 gap-x-12 [grid-template-columns:repeat(auto-fill,minmax(160px,1fr))] place-items-start">
         {books.map((book) => (
           <BookCard key={book.id ?? book.title} {...book} />
         ))}
