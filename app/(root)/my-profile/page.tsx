@@ -50,19 +50,7 @@ export default async function MyProfilePage() {
 
   return (
     <main className="min-h-screen bg-gray-900 text-white p-8">
-      <div className="flex justify-between items-center mb-8">
-        {/* Sign-out form */}
-        <form
-          action={async () => {
-            "use server";
-            await signOut();
-          }}
-        >
-          <Button>Logout</Button>
-        </form>
-      </div>
-
-      {/* two-column layout on lg+, single column on mobile */}
+      {/* profile page with borrowed books */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <ProfilePage initial={me} />
         <BookList title="Borrowed books" books={borrowedBooks} />
