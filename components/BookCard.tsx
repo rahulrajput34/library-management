@@ -16,8 +16,8 @@ const BookCard = ({
   return (
     <li
       className={cn(
-        "flex flex-col",
-        isLoanedBook ? "xs:w-52 w-full" : "shrink-0 w-28 sm:w-32 md:w-40"
+        "mx-auto group rounded-3xl p-4 backdrop-blur-lg shadow-lg",
+        isLoanedBook ? "w-full max-w-[240px]" : "w-36 sm:w-40"
       )}
     >
       <Link
