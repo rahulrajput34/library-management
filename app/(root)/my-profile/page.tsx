@@ -4,14 +4,12 @@ import { users, books, borrowRecords } from "@/database/schema";
 import { eq, asc } from "drizzle-orm";
 import BookList from "@/components/BookList";
 import ProfilePage from "@/components/profile/ProfilePage";
-import { Button } from "@/components/ui/button";
-import { signOut } from "@/auth";
 
 export default async function MyProfilePage() {
   // session from imported auth
   const session = await auth();
   if (!session?.user?.id) {
-    return <p>Unauthorized</p>;
+    return <p className="text-red-500">Unauthorized</p>;
   }
 
   // get my details
@@ -49,9 +47,9 @@ export default async function MyProfilePage() {
     .limit(10);
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white p-8">
+    <main className="min-h-screen text-gray-100 p-8">
       {/* profile page with borrowed books */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="mx-auto max-w-7xl grid gap-12 lg:grid-cols-[420px_1fr]">
         <ProfilePage initial={me} />
         <BookList title="Borrowed books" books={borrowedBooks} />
       </div>
