@@ -7,6 +7,7 @@ import { cn, getInitials, getFirstName } from "@/lib/utils";
 import { Session } from "next-auth";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { Icon } from "@iconify/react";
+import { logoutAction } from "@/lib/actions/logout";
 
 const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
@@ -58,19 +59,15 @@ const Header = ({ session }: { session: Session }) => {
           </Link>
         </nav>
         <nav>
-          <Link
-            href="/"
-            className={cn(
-              "text-sm font-medium transition-colors hover:text-red-700",
-              pathname === "/library" ? "text-red-800" : "text-red-800"
-            )}
-          >
-            <Icon
-              icon="material-symbols:logout-rounded"
-              width="24"
-              height="24"
-            />
-          </Link>
+          <form action={logoutAction}>
+            <button type="submit" className="text-red-600 hover:text-red-400">
+              <Icon
+                icon="material-symbols:logout-rounded"
+                width="24"
+                height="24"
+              />
+            </button>
+          </form>
         </nav>
       </div>
     </header>
