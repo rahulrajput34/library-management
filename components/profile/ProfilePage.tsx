@@ -35,13 +35,15 @@ function ProfileCard({
       <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 bg-black/50 h-2 w-6 rounded" />
 
       {/* Card body */}
-      <div className="bg-gradient-to-b from-indigo-900 to-indigo-800 
+      <div
+        className="bg-gradient-to-b from-indigo-900 to-indigo-800 
                       rounded-2xl border border-white/10 
-                      shadow-xl p-8 space-y-8">
+                      shadow-xl p-8 space-y-8"
+      >
         {/* Avatar + name */}
         <div className="flex flex-col items-center space-y-3">
           <img
-            src="/placeholder-avatar.jpg"  /* replace with real src */
+            src="/placeholder-avatar.jpg" /* replace with real src */
             alt="Avatar"
             className="h-20 w-20 rounded-full object-cover ring-2 ring-indigo-500/60"
           />
@@ -49,8 +51,10 @@ function ProfileCard({
             <h2 className="text-2xl font-semibold text-white">
               {profile.fullName}
             </h2>
-            <span className="inline-flex items-center justify-center 
-                             h-5 w-5 rounded-full bg-green-500 text-xs text-white">
+            <span
+              className="inline-flex items-center justify-center 
+                             h-5 w-5 rounded-full bg-green-500 text-xs text-white"
+            >
               ✓
             </span>
           </div>
@@ -59,7 +63,7 @@ function ProfileCard({
 
         {/* Details */}
         <div className="space-y-4">
-          <Detail label="University" value="JS Mastery Pro" />
+          <Detail label="University" value="Mohawk College" />
           <Detail label="Student ID" value={profile.universityId} />
         </div>
 
