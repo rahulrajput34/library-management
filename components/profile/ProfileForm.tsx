@@ -25,7 +25,6 @@ export default function ProfileForm({
   initial: FormInitial;
   onSaved: () => void;
 }) {
-  
   // state & navigation
   const [state, formAction] = useFormState(updateProfile, { ok: false });
   const router = useRouter();
@@ -45,9 +44,9 @@ export default function ProfileForm({
   return (
     <form
       action={formAction}
-      className="relative w-full max-w-sm overflow-hidden rounded-2xl
-                 bg-gradient-to-br from-slate-800 via-slate-900 to-black
-                 p-10 shadow-xl ring-1 ring-white/10 space-y-4"
+      className="relative w-full max-w-sm overflow-hidden rounded-xl
+                bg-gradient-to-br from-gray-900 via-black to-gray-900
+                p-10 space-y-4"
     >
       {/* avatar + name */}
       <div className="flex flex-col items-center gap-4">
