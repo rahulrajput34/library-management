@@ -1,36 +1,43 @@
 "use client";
 
-import React, { useTransition } from "react";
-import { updateProfile } from "@/lib/actions/profile";
+import React, { useEffect, useState, useTransition } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
+import { IKImage } from "imagekitio-next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import FileUpload from "@/components/FileUpload";
+import { updateProfile } from "@/lib/actions/profile";
+import config from "@/lib/config";
 
-// Profile Edit
+type FormInitial = {
+  fullName: string;
+  email: string;
+  universityId: number;
+  universityCard: string;
+};
+
+// to update the profile
 export default function ProfileForm({
   initial,
   onSaved,
 }: {
-  initial: {
-    fullName: string;
-    email: string;
-    universityId: number;
-    universityCard: string;
-  };
+  initial: FormInitial;
   onSaved: () => void;
 }) {
+  
+  // state & navigation
   const [state, formAction] = useFormState(updateProfile, { ok: false });
   const router = useRouter();
   const [, startTransition] = useTransition();
 
-  // When the server action succeeds
+  // path of the uploaded card – pre-seed with the existing one
+  const [cardPath, setCardPath] = useState(initial.universityCard);
+
+  // refresh parent on save
   useEffect(() => {
     if (state.ok) {
-      // tell the parent to close the editor
       onSaved();
-      // Re-run the server component so <ProfileSummary> has fresh data
       startTransition(() => router.refresh());
     }
   }, [state.ok, onSaved, router, startTransition]);
@@ -38,89 +45,71 @@ export default function ProfileForm({
   return (
     <form
       action={formAction}
-      className="max-w-lg mx-auto space-y-6 bg-gray-950 dark:bg-neutral-900/90 backdrop-blur-lg border border-gray-200 dark:border-neutral-700 shadow-xl rounded-2xl p-8"
+      className="relative w-full max-w-sm overflow-hidden rounded-2xl
+                 bg-gradient-to-br from-slate-800 via-slate-900 to-black
+                 p-10 shadow-xl ring-1 ring-white/10 space-y-4"
     >
-      {/* Full Name */}
-      <div className="space-y-2">
-        <label
-          htmlFor="fullName"
-          className="block text-sm font-semibold text-gray-700 dark:text-gray-300"
-        >
-          Full name
-        </label>
+      {/* avatar + name */}
+      <div className="flex flex-col items-center gap-4">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Hb5xzFZJCTW4cMqmPwsgfw-gILUV7QevvQ&s"
+          alt={initial.fullName}
+          className="h-24 w-24 rounded-full object-cover ring-4 ring-green-500/60"
+        />
         <Input
           name="fullName"
           defaultValue={initial.fullName}
-          className="w-full"
+          className="w-full text-center text-xl font-semibold text-white bg-transparent
+                     border-none focus:ring-0"
         />
       </div>
 
-      {/* Email */}
+      {/* email + id */}
+      <DetailInput
+        label="Email"
+        name="email"
+        type="email"
+        defaultValue={initial.email}
+      />
+      <DetailInput
+        label="University ID"
+        name="universityId"
+        type="number"
+        defaultValue={initial.universityId}
+      />
+
+      {/* student-card uploader */}
       <div className="space-y-2">
-        <label
-          htmlFor=""
-          className="block text-sm font-semibold text-gray-700 dark:text-gray-300"
-        >
-          Email
-        </label>
-        <Input
-          name="email"
-          type="email"
-          defaultValue={initial.email}
-          className="w-full"
+        <span className="text-xs uppercase tracking-wide text-gray-400">
+          Student card image
+        </span>
+        {/* uploader – writes back a path string */}
+        <FileUpload
+          type="image"
+          accept="image/*"
+          placeholder="Upload new card"
+          folder="/student-cards"
+          variant="gray"
+          value={cardPath}
+          onFileChange={setCardPath} // update local state
         />
+
+        {/* hidden field that the server action reads*/}
+        <input type="hidden" name="universityCard" value={cardPath ?? ""} />
       </div>
 
-      {/* University ID */}
-      <div className="space-y-2">
-        <label
-          htmlFor=""
-          className="block text-sm font-semibold text-gray-700 dark:text-gray-300"
-        >
-          University ID
-        </label>
-        <Input
-          name="universityId"
-          type="number"
-          defaultValue={initial.universityId}
-          className="w-full"
-        />
-      </div>
+      {/* password */}
+      <DetailInput
+        label="Password"
+        name="password"
+        type="password"
+        placeholder="Leave blank to keep current password"
+      />
 
-      {/* University Card */}
-      <div className="space-y-2">
-        <label
-          htmlFor=""
-          className="block text-sm font-semibold text-gray-700 dark:text-gray-300"
-        >
-          University Card
-        </label>
-        <Input
-          name="universityCard"
-          defaultValue={initial.universityCard}
-          className="w-full"
-        />
-      </div>
-
-      {/* Password */}
-      <div className="space-y-2">
-        <label
-          htmlFor=""
-          className="block text-sm font-semibold text-gray-700 dark:text-gray-300"
-        >
-          Password
-        </label>
-        <Input
-          name="password"
-          type="password"
-          placeholder="Leave blank to keep current password"
-          className="w-full"
-        />
-      </div>
-
+      {/* save button & success note */}
       <SaveButton disabled={state.ok} />
       {state.ok && (
-        <p className="text-sm text-emerald-600 font-medium">
+        <p className="text-sm font-medium text-emerald-500 text-center">
           Profile updated ✔
         </p>
       )}
@@ -128,14 +117,46 @@ export default function ProfileForm({
   );
 }
 
-// Little helper so the button shows a spinner while the action is running
+// Reusable fields for the form
+function DetailInput({
+  label,
+  name,
+  type = "text",
+  defaultValue,
+  placeholder,
+}: {
+  label: string;
+  name: string;
+  type?: React.HTMLInputTypeAttribute;
+  defaultValue?: string | number;
+  placeholder?: string;
+}) {
+  return (
+    <div className="flex flex-col">
+      <span className="text-xs uppercase tracking-wide text-gray-400">
+        {label}
+      </span>
+      <Input
+        name={name}
+        type={type}
+        defaultValue={defaultValue as string}
+        placeholder={placeholder}
+        className="bg-gray-900/40 text-white ring-1 ring-white/10
+                   focus:ring-2 focus:ring-emerald-400/60"
+      />
+    </div>
+  );
+}
+
+// Saving profile information
 function SaveButton({ disabled }: { disabled?: boolean }) {
   const { pending } = useFormStatus();
   return (
     <Button
       type="submit"
       disabled={pending || disabled}
-      className="w-full sm:w-auto flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold"
+      className="w-full flex items-center justify-center
+                 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold"
     >
       {pending ? "Saving…" : "Save changes"}
     </Button>
