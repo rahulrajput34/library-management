@@ -1,6 +1,6 @@
 // app/api/books/route.ts
 import { NextResponse } from "next/server";
-import { sql, or, like } from "drizzle-orm";
+import { sql, or, ilike } from "drizzle-orm"; // ← use ilike
 import { books as BooksTable } from "@/database/schema";
 import { db } from "@/database/drizzle";
 
@@ -10,12 +10,12 @@ export async function GET(req: Request) {
   const page = parseInt(searchParams.get("page") ?? "1", 10);
   const pageSize = 12;
 
-  // build optional where clause
+  // build optional ILIKE clause
   const whereClause = q
-    ? or(like(BooksTable.title, `%${q}%`), like(BooksTable.author, `%${q}%`))
+    ? or(ilike(BooksTable.title, `%${q}%`), ilike(BooksTable.author, `%${q}%`))
     : undefined;
 
-  // 1) get total count
+  // count
   const countResult = await db
     .select({ count: sql<string>`count(*)` })
     .from(BooksTable)
@@ -23,7 +23,7 @@ export async function GET(req: Request) {
     .execute();
   const total = parseInt(countResult[0].count, 10);
 
-  // 2) fetch paginated rows
+  // paginated rows
   const rows = await db
     .select({
       id: BooksTable.id,
