@@ -51,7 +51,7 @@ export default function ProfileForm({
       {/* avatar + name */}
       <div className="flex flex-col items-center gap-4">
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Hb5xzFZJCTW4cMqmPwsgfw-gILUV7QevvQ&s"
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
           alt={initial.fullName}
           className="h-24 w-24 rounded-full object-cover ring-4 ring-green-500/60"
         />
