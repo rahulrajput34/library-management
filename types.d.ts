@@ -14,6 +14,15 @@ interface Book {
   createdAt: Date | null;
 }
 
+type LoanStatus = "BORROWED" | "RETURNED";
+
+interface LoanedBook extends Book {
+  borrowDate: Date;
+  dueDate: Date;
+  returnDate: Date | null;
+  status: LoanStatus;
+}
+
 interface AuthCredentials {
   fullName: string;
   email: string;
