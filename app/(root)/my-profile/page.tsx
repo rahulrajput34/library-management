@@ -23,9 +23,10 @@ export default async function MyProfilePage() {
     .from(users)
     .where(eq(users.id, session.user.id));
 
-  // borrowed books of that user
+  // borrowed books of that user and their status
   const borrowedBooks = await db
     .select({
+      // book fields
       id: books.id,
       title: books.title,
       author: books.author,
@@ -39,10 +40,15 @@ export default async function MyProfilePage() {
       videoUrl: books.videoUrl,
       summary: books.summary,
       createdAt: books.createdAt,
+      // loan fields
+      borrowDate: borrowRecords.borrowDate,
+      dueDate: borrowRecords.dueDate,
+      returnDate: borrowRecords.returnDate,
+      status: borrowRecords.status,
     })
     .from(books)
     .innerJoin(borrowRecords, eq(borrowRecords.bookId, books.id))
-    .where(eq(borrowRecords.status, "BORROWED"))
+    .where(eq(borrowRecords.userId, session.user.id))
     .orderBy(asc(borrowRecords.borrowDate))
     .limit(10);
 
@@ -51,7 +57,7 @@ export default async function MyProfilePage() {
       {/* profile page with borrowed books */}
       <div className="mx-auto max-w-7xl grid gap-12 lg:grid-cols-[420px_1fr]">
         <ProfilePage initial={me} />
-        <BookList title="Borrowed books" books={borrowedBooks} />
+        <BookList title="Borrowed books" books={borrowedBooks} loaned={true} />
       </div>
     </main>
   );
