@@ -37,10 +37,10 @@ const Header = ({ session }: { session: Session }) => {
         </nav>
         <nav>
           <Link
-            href="/"
+            href="/search"
             className={cn(
               "text-sm font-medium transition-colors hover:text-gray-100",
-              pathname === "/library" ? "text-gray-100" : "text-gray-400"
+              pathname.startsWith("/search") ? "text-gray-100" : "text-gray-400"
             )}
           >
             Search
