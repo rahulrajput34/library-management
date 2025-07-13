@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 import { books } from "@/database/schema";
 import BookCover from "@/components/BookCover";
+import axios from "axios";
 
 // Define structure of books
 interface Book {
@@ -40,10 +41,10 @@ export default function SearchPage() {
     async function fetchBooks() {
       setLoading(true);
       // Fetch books from API based on query and page
-      const res = await fetch(
-        `/api/books?q=${encodeURIComponent(q)}&page=${page}`
-      );
-      const json = await res.json();
+      const { data: json } = await axios.get("/api/books", {
+        params: { q, page },
+      });
+
       // Update state with fetched data
       setBooks(json.books);
       setTotal(json.total);
