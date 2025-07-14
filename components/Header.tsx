@@ -60,7 +60,10 @@ const Header = ({ session }: { session: Session }) => {
         </nav>
         <nav>
           <form action={logoutAction}>
-            <button type="submit" className="text-red-600 hover:text-red-400">
+            <button
+              type="submit"
+              className="flex items-center text-sm text-red-600 hover:text-red-400"
+            >
               <Icon
                 icon="material-symbols:logout-rounded"
                 width="24"
