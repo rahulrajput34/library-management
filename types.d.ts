@@ -17,10 +17,10 @@ interface Book {
 type LoanStatus = "BORROWED" | "RETURNED";
 
 interface LoanedBook extends Book {
-  borrowDate: Date;
-  dueDate: Date;
-  returnDate: Date | null;
-  status: LoanStatus;
+  borrowDate?: Date;
+  dueDate?: Date;
+  returnDate?: Date | null;
+  status?: LoanStatus;
 }
 
 interface AuthCredentials {
