@@ -42,77 +42,80 @@ export default function ProfileForm({
   }, [state.ok, onSaved, router, startTransition]);
 
   return (
-    <form
-      action={formAction}
-      className="relative w-full max-w-sm overflow-hidden rounded-xl
-                bg-gradient-to-br from-gray-900 via-black to-gray-900
-                p-10 space-y-4"
-    >
-      {/* avatar + name */}
-      <div className="flex flex-col items-center gap-4">
-        <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-          alt={initial.fullName}
-          className="h-24 w-24 rounded-full object-cover ring-4 ring-green-500/60"
-        />
-        <Input
-          name="fullName"
-          defaultValue={initial.fullName}
-          className="w-full text-center text-xl font-semibold text-white bg-transparent
+    <aside className="w-full max-w-sm lg:sticky lg:top-24 lg:max-h-screen">
+      <form
+        action={formAction}
+        /* ➋ flex‑col lets us push the Save button to the bottom  */
+        className="relative flex flex-col rounded-xl overflow-hidden
+                   bg-gradient-to-br from-gray-900 via-black to-gray-900
+                   p-6 space-y-4"
+      >
+        {/* avatar + name */}
+        <div className="flex flex-col items-center gap-4">
+          <img
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            alt={initial.fullName}
+            className="h-24 w-24 rounded-full object-cover ring-4 ring-green-500/60"
+          />
+          <Input
+            name="fullName"
+            defaultValue={initial.fullName}
+            className="w-full text-center text-xl font-semibold text-white bg-transparent
                      border-none focus:ring-0"
+          />
+        </div>
+
+        {/* email + id */}
+        <DetailInput
+          label="Email"
+          name="email"
+          type="email"
+          defaultValue={initial.email}
         />
-      </div>
-
-      {/* email + id */}
-      <DetailInput
-        label="Email"
-        name="email"
-        type="email"
-        defaultValue={initial.email}
-      />
-      <DetailInput
-        label="University ID"
-        name="universityId"
-        type="number"
-        defaultValue={initial.universityId}
-      />
-
-      {/* student-card uploader */}
-      <div className="space-y-2">
-        <span className="text-xs uppercase tracking-wide text-gray-400">
-          Student card image
-        </span>
-        {/* uploader – writes back a path string */}
-        <FileUpload
-          type="image"
-          accept="image/*"
-          placeholder="Upload new card"
-          folder="/student-cards"
-          variant="gray"
-          value={cardPath}
-          onFileChange={setCardPath} // update local state
+        <DetailInput
+          label="University ID"
+          name="universityId"
+          type="number"
+          defaultValue={initial.universityId}
         />
 
-        {/* hidden field that the server action reads*/}
-        <input type="hidden" name="universityCard" value={cardPath ?? ""} />
-      </div>
+        {/* student-card uploader */}
+        <div className="space-y-2">
+          <span className="text-xs uppercase tracking-wide text-gray-400">
+            Student card image
+          </span>
+          {/* uploader – writes back a path string */}
+          <FileUpload
+            type="image"
+            accept="image/*"
+            placeholder="Upload new card"
+            folder="/student-cards"
+            variant="gray"
+            value={cardPath}
+            onFileChange={setCardPath} // update local state
+          />
 
-      {/* password */}
-      <DetailInput
-        label="Password"
-        name="password"
-        type="password"
-        placeholder="Leave blank to keep current password"
-      />
+          {/* hidden field that the server action reads*/}
+          <input type="hidden" name="universityCard" value={cardPath ?? ""} />
+        </div>
 
-      {/* save button & success note */}
-      <SaveButton disabled={state.ok} />
-      {state.ok && (
-        <p className="text-sm font-medium text-emerald-500 text-center">
-          Profile updated ✔
-        </p>
-      )}
-    </form>
+        {/* password */}
+        <DetailInput
+          label="Password"
+          name="password"
+          type="password"
+          placeholder="Leave blank to keep current password"
+        />
+
+        {/* save button & success note */}
+        <SaveButton disabled={state.ok} />
+        {state.ok && (
+          <p className="text-sm font-medium text-emerald-500 text-center">
+            Profile updated ✔
+          </p>
+        )}
+      </form>
+    </aside>
   );
 }
 
