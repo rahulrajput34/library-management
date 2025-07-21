@@ -8,9 +8,16 @@ import { Session } from "next-auth";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { Icon } from "@iconify/react";
 import { logoutAction } from "@/lib/actions/logout";
+import ConfirmDialog from "./ConfirmDialog";
 
+// Header of the main page for users
 const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
+
+  // ask for permission to logout
+  const handleLogout = async () => {
+    await logoutAction();
+  };
 
   return (
     <header className="mb-12 flex items-center justify-between">
@@ -24,6 +31,7 @@ const Header = ({ session }: { session: Session }) => {
         />
       </Link>
       <div className="flex items-center gap-4">
+        {/* Home page */}
         <nav>
           <Link
             href="/"
@@ -35,6 +43,8 @@ const Header = ({ session }: { session: Session }) => {
             Home
           </Link>
         </nav>
+
+        {/* Search page */}
         <nav>
           <Link
             href="/search"
@@ -46,6 +56,8 @@ const Header = ({ session }: { session: Session }) => {
             Search
           </Link>
         </nav>
+
+        {/* user profile page */}
         <nav>
           <Link href="/my-profile" className="text-sm font-medium">
             <Avatar>
@@ -58,19 +70,28 @@ const Header = ({ session }: { session: Session }) => {
             </span>
           </Link>
         </nav>
+
+        {/* Logout button */}
         <nav>
-          <form action={logoutAction}>
-            <button
-              type="submit"
-              className="flex items-center text-sm text-red-600 hover:text-red-400"
-            >
-              <Icon
-                icon="material-symbols:logout-rounded"
-                width="24"
-                height="24"
-              />
-            </button>
-          </form>
+          <ConfirmDialog
+            trigger={
+              <button
+                type="button"
+                className="flex items-center text-sm text-red-600 hover:text-red-400"
+              >
+                <Icon
+                  icon="material-symbols:logout-rounded"
+                  width="24"
+                  height="24"
+                />
+              </button>
+            }
+            title="Do you really want to logout?"
+            description="You'll be signed out of your account."
+            confirmText="Logout"
+            cancelText="Cancel"
+            onConfirm={handleLogout}
+          />
         </nav>
       </div>
     </header>
