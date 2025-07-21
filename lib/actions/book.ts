@@ -2,7 +2,7 @@
 
 import { db } from "@/database/drizzle";
 import { books, borrowRecords } from "@/database/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import dayjs from "dayjs";
 
 // borrow Book from library
@@ -11,6 +11,27 @@ export const borrowBook = async (params: BorrowBookParams) => {
   const { userId, bookId } = params;
 
   try {
+    // check if the user has already borrowed this book.
+    const alreadyBorrowed = await db
+      .select({ id: borrowRecords.id })
+      .from(borrowRecords)
+      .where(
+        and(
+          eq(borrowRecords.userId, userId),
+          eq(borrowRecords.bookId, bookId),
+          eq(borrowRecords.status, "BORROWED")
+        )
+      )
+      .limit(1);
+
+    // if already borrowed
+    if (alreadyBorrowed.length) {
+      return {
+        success: false,
+        error: "You already have this book checked out.",
+      };
+    }
+
     // get that book which user selected.. id we get from url
     const book = await db
       .select({ availableCopies: books.availableCopies })
