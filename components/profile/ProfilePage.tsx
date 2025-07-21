@@ -5,6 +5,7 @@ import ProfileForm from "./ProfileForm";
 import { Button } from "@/components/ui/button";
 import { IKImage } from "imagekitio-next";
 import config from "@/lib/config";
+import Detail from "./Detail";
 
 export type Profile = {
   fullName: string;
@@ -32,16 +33,9 @@ function ProfileCard({
 }) {
   return (
     <aside className="w-full max-w-sm lg:self-start">
-      <div
-        className="relative flex flex-col rounded-xl bg-gradient-to-br from-gray-900 via-black to-gray-900 p-6 space-y-8"
-      >
+      <div className="relative flex flex-col rounded-xl bg-gradient-to-br from-gray-900 via-black to-gray-900 p-6 space-y-8">
         {/* Avatar + name */}
         <div className="flex flex-col items-center gap-4">
-          <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-            alt={profile.fullName}
-            className="h-24 w-24 rounded-full object-cover ring-4 ring-green-500/60"
-          />
           <div className="flex items-center gap-1">
             <h2 className="text-2xl font-semibold text-white">
               {profile.fullName}
@@ -85,17 +79,5 @@ function ProfileCard({
         </button>
       </div>
     </aside>
-  );
-}
-
-/* Helper for the detail rows */
-function Detail({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div className="flex flex-col">
-      <span className="text-xs uppercase tracking-wide text-gray-400">
-        {label}
-      </span>
-      <span className="text-lg font-medium text-white">{value}</span>
-    </div>
   );
 }
