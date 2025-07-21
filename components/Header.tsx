@@ -8,7 +8,7 @@ import { Session } from "next-auth";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { Icon } from "@iconify/react";
 import { logoutAction } from "@/lib/actions/logout";
-import ConfirmDialog from "./ConfirmDialog";
+import ConfirmDialog from "./radix/ConfirmDialog";
 
 // Header of the main page for users
 const Header = ({ session }: { session: Session }) => {

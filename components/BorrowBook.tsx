@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { borrowBook } from "@/lib/actions/book";
-import ConfirmDialog from "./ConfirmDialog";
+import ConfirmDialog from "./radix/ConfirmDialog";
 
 interface Props {
   userId: string;
