@@ -12,6 +12,7 @@ import ratelimit from "../ratelimit";
 import { redirect } from "next/navigation";
 import { workflowClient } from "../workflow";
 import config from "@/lib/config";
+import { sendWelcomeEmail } from "../email/sendWelcomeEmail";
 
 // SignIn and validation param using same AuthCredentials after picking from it
 export const signInWithCredentials = async (
@@ -98,6 +99,14 @@ export const signUp = async (params: AuthCredentials) => {
         fullName,
       },
     });
+
+    // send welcome email
+    try {
+      await sendWelcomeEmail(email, fullName);
+      console.log("Welcome email queued for", email);
+    } catch (mailErr) {
+      console.error("Failed to send welcome email:", mailErr);
+    }
 
     // let use log in as well
     await signInWithCredentials({ email, password });
