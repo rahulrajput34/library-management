@@ -15,6 +15,10 @@ const config = {
       qstashToken: process.env.QSTASH_TOKEN!,
     },
     resendToken: process.env.NEXT_PUBLIC_RESEND_TOKEN!,
+    nodemailer: {
+      email: process.env.NODEMAILER_EMAIL!,
+      password: process.env.NODEMAILER_PASSWORD!
+    }
   },
 };
 
