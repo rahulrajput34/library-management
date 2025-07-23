@@ -4,6 +4,8 @@ import { db } from "@/database/drizzle";
 import { books, borrowRecords } from "@/database/schema";
 import { eq, and } from "drizzle-orm";
 import dayjs from "dayjs";
+import { users } from "@/database/schema";
+import { BorrowedConfirm } from "../email/BorrowedConfirm";
 
 // borrow Book from library
 export const borrowBook = async (params: BorrowBookParams) => {
@@ -63,6 +65,34 @@ export const borrowBook = async (params: BorrowBookParams) => {
       .update(books)
       .set({ availableCopies: book[0].availableCopies - 1 })
       .where(eq(books.id, bookId));
+
+    // fetch the user details
+    const [userRow] = await db
+      .select({ name: users.fullName, email: users.email })
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1);
+
+    // fetch the book details
+    const [bookRow] = await db
+      .select({ title: books.title })
+      .from(books)
+      .where(eq(books.id, bookId))
+      .limit(1);
+
+    // Format the due date to human readable format
+    // 22 Jul 2025
+    const borrowDateHuman = dayjs().format("DD MMM YYYY");
+    const dueDateHuman = dayjs(dueDate).format("DD MMM YYYY");
+
+    // send the e‑mail without holding the promise
+    void BorrowedConfirm(
+      userRow.email,
+      userRow.name,
+      bookRow.title,
+      borrowDateHuman,
+      dueDateHuman
+    ).catch((err) => console.error("Borrow-email error:", err));
 
     // every thing was fine
     return {
