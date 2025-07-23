@@ -31,14 +31,12 @@ const BookBorrowed = ({ title, books }: Props) => {
             icon="mdi:book-open-page-variant"
             className="h-12 w-12 text-white/40 mb-6"
           />
-
           <h3 className="text-2xl font-semibold mb-2">No borrowed books yet</h3>
-
           <p className="max-w-md text-gray-400 mb-6">
             Explore our catalogue and borrow your first book — it will appear
             here automatically.
           </p>
-
+          {/* Link to the browse books page */}
           <Link
             href="/"
             className="rounded-lg bg-emerald-500 px-6 py-2 font-semibold text-white transition hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400/60"
