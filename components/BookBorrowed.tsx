@@ -11,7 +11,7 @@ interface Props {
   loaned?: boolean;
 }
 
-// hi there
+// books borrowed by user
 const BookBorrowed = ({ title, books }: Props) => {
   const hasBooks = books.length > 0;
   return (
