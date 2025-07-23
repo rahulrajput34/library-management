@@ -82,7 +82,7 @@ export async function BorrowedConfirm(
               <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 40px 0;">
                 <tr>
                   <td bgcolor="#E6D2B0" align="center" style="border-radius:6px;">
-                    <a href="https://library-management-lilac-zeta.vercel.app/sign-in"
+                    <a href="https://library-management-lilac-zeta.vercel.app/my-profile"
                        style="display:inline-block;padding:12px 36px;font-size:16px;font-weight:600;
                               color:#000000;text-decoration:none;border-radius:6px;">
                       View Borrowed Books

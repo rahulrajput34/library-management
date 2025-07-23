@@ -36,20 +36,23 @@ const BookOverview = async ({
     message:
       availableCopies <= 0
         ? "Book is not available"
-        : "You are not eligible to borrow this book",
+        : "Your borrowing privileges are pending approval. Please contact the library to complete the process.",
   };
   return (
     <section className="relative grid gap-12 rounded-2xl p-12 lg:grid lg:grid-cols-2 lg:gap-20">
       {/* Book Info */}
       <div className="flex flex-col gap-5">
-        <h1 className="font-bebas-neue text-5xl leading-none font-semibold">{title}</h1>
+        <h1 className="font-bebas-neue text-5xl leading-none font-semibold">
+          {title}
+        </h1>
         <div className="flex flex-wrap items-center gap-3 text-sm text-gray-100">
           <p>
             By <span className="font-semibold text-amber-100">{author}</span>
           </p>
           <span className="hidden sm:block">•</span>
           <p>
-            Category: <span className="font-semibold text-amber-100">{genre}</span>
+            Category:{" "}
+            <span className="font-semibold text-amber-100">{genre}</span>
           </p>
           <span className="hidden sm:block">•</span>
           <div className="flex items-center gap-1">
@@ -63,9 +66,7 @@ const BookOverview = async ({
             <span className="text-amber-100">
               {typeof rating === "number" ? rating.toFixed(1) : rating}
             </span>
-            <span>
-              / 5
-            </span>
+            <span>/ 5</span>
           </div>
         </div>
 
@@ -76,7 +77,9 @@ const BookOverview = async ({
           </p>
           <p>
             Available:{" "}
-            <span className="font-semibold text-amber-100">{availableCopies}</span>
+            <span className="font-semibold text-amber-100">
+              {availableCopies}
+            </span>
           </p>
         </div>
 
