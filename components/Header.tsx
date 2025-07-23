@@ -22,13 +22,16 @@ const Header = ({ session }: { session: Session }) => {
   return (
     <header className="mb-12 flex items-center justify-between">
       <Link href="/">
-        <Image
-          src="/icons/logo.svg"
-          alt="logo"
-          width={42}
-          height={42}
-          className="object-contain"
-        />
+        <div className="flex items-center">
+          <Image
+            src="/icons/logo.svg"
+            alt="BookWise Logo"
+            width={32}
+            height={32}
+            className="object-contain"
+          />
+          <h1 className="text-2xl font-bold text-white mx-2">BookWise</h1>
+        </div>
       </Link>
       <div className="flex items-center gap-4">
         {/* Home page */}
