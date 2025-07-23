@@ -2,8 +2,8 @@ import { auth } from "@/auth";
 import { db } from "@/database/drizzle";
 import { users, books, borrowRecords } from "@/database/schema";
 import { eq, asc } from "drizzle-orm";
-import BookList from "@/components/BookList";
 import ProfilePage from "@/components/profile/ProfilePage";
+import BookBorrowed from "@/components/BookBorrowed";
 
 export default async function MyProfilePage() {
   // session from imported auth
@@ -57,7 +57,11 @@ export default async function MyProfilePage() {
       {/* profile page with borrowed books */}
       <div className="mx-auto max-w-7xl grid gap-12 lg:grid-cols-[420px_1fr]">
         <ProfilePage initial={me} />
-        <BookList title="Borrowed books" books={borrowedBooks} loaned={true} />
+        <BookBorrowed
+          title="Borrowed books"
+          books={borrowedBooks}
+          loaned={true}
+        />
       </div>
     </main>
   );
