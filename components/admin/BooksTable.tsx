@@ -1,0 +1,102 @@
+"use client";
+
+import { deleteBook } from "@/lib/admin/actions/book";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Icon } from "@iconify/react";
+
+type Props = { books: Book[] };
+
+export default function BooksTable({ books }: Props) {
+  const router = useRouter();
+
+  const handleDelete = async (id: string) => {
+    const res = await deleteBook(id);
+    if (res.success) toast.success("Book deleted.");
+    router.refresh();
+  };
+
+  return (
+    <table className="min-w-full text-sm">
+      <thead className="bg-slate-50 text-left font-semibold">
+        <tr>
+          <th className="p-3">Title</th>
+          <th className="p-3">Author</th>
+          <th className="p-3">Genre</th>
+          <th className="p-3">Rating</th>
+          <th className="p-3 whitespace-nowrap">Date Created</th>
+          <th className="p-3">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {books.map((b) => (
+          <tr key={b.id} className="border-b last:border-b-0">
+            <td className="p-3 font-medium">{b.title}</td>
+            <td className="p-3">{b.author}</td>
+            <td className="p-3">{b.genre}</td>
+            <td className="p-3">{b.rating}/5</td>
+            <td className="p-3">{b.createdAt?.toLocaleDateString()}</td>
+            <td className="p-3">
+              <div className="flex gap-3">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-blue-600 hover:bg-blue-50"
+                  asChild
+                >
+                  <a href={`/admin/books/${b.id}/edit`}>
+                    <Icon icon="mdi:pencil" width={18} />
+                  </a>
+                </Button>
+
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="text-red-600 hover:bg-red-50"
+                    >
+                      <Icon icon="mdi:trash-can" width={18} />
+                    </Button>
+                  </AlertDialogTrigger>
+
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete book?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleDelete(b.id)}
+                        className="bg-red-600 text-white hover:bg-red-700"
+                      >
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
