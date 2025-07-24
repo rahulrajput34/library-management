@@ -19,14 +19,14 @@ import FileUpload from "@/components/FileUpload";
 import { toast } from "sonner";
 import ColorPicker from "../ColorPicker";
 import { Textarea } from "@/components/ui/textarea";
-import { createBook } from "@/lib/admin/actions/book";
+import { createBook, updateBook } from "@/lib/admin/actions/book";
 
 // give two type
 interface Props extends Partial<Book> {
   type?: "create" | "update";
 }
 
-const BookForm = ({ type, ...book }: Props) => {
+const BookForm = ({ type = "create", ...book }: Props) => {
   const router = useRouter();
 
   // Create a new form using useForm hook
@@ -34,16 +34,16 @@ const BookForm = ({ type, ...book }: Props) => {
   const form = useForm<z.infer<typeof bookSchema>>({
     resolver: zodResolver(bookSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      author: "",
-      genre: "",
-      rating: 1,
-      totalCopies: 1,
-      coverUrl: "",
-      coverColor: "",
-      videoUrl: "",
-      summary: "",
+      title: book.title ?? "",
+      author: book.author ?? "",
+      genre: book.genre ?? "",
+      rating: book.rating ?? 1,
+      totalCopies: book.totalCopies ?? 1,
+      coverUrl: book.coverUrl ?? "",
+      coverColor: book.coverColor ?? "",
+      description: book.description ?? "",
+      videoUrl: book.videoUrl ?? "",
+      summary: book.summary ?? "",
     },
   });
 
@@ -51,13 +51,16 @@ const BookForm = ({ type, ...book }: Props) => {
   // it will create a new book or update an existing book
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
     // try to create new
-    const result = await createBook(values);
+    const result =
+      type === "create"
+        ? await createBook(values)
+        : await updateBook(book.id as string, values);
 
     if (result.success) {
       toast("Success", {
         description: "Book created successfully",
       });
-      router.push(`/admin/books/${result.data.id}`);
+      router.push(`/admin/books`);
     } else {
       toast("Error", {
         description: result.message,
@@ -295,7 +298,7 @@ const BookForm = ({ type, ...book }: Props) => {
           type="submit"
           className="min-h-14 w-full bg-blue-900 hover:bg-blue-900/95 !important text-white"
         >
-          Add Book to Library
+          {type === "create" ? "Add Book to Library" : "Update Book"}
         </Button>
       </form>
     </Form>
