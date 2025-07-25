@@ -16,6 +16,7 @@ import {
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
+import ConfirmDialog from "../radix/ConfirmDialog";
 
 type Props = { books: Book[] };
 
@@ -36,7 +37,7 @@ export default function BooksTable({ books }: Props) {
           <th className="p-3">Author</th>
           <th className="p-3">Genre</th>
           <th className="p-3">Rating</th>
-          <th className="p-3 whitespace-nowrap">Date Created</th>
+          <th className="p-3 whitespace-nowrap">Date Created</th>
           <th className="p-3">Action</th>
         </tr>
       </thead>
@@ -62,8 +63,8 @@ export default function BooksTable({ books }: Props) {
                   </a>
                 </Button>
 
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
+                <ConfirmDialog
+                  trigger={
                     <Button
                       size="icon"
                       variant="ghost"
@@ -71,27 +72,13 @@ export default function BooksTable({ books }: Props) {
                     >
                       <Icon icon="mdi:trash-can" width={18} />
                     </Button>
-                  </AlertDialogTrigger>
-
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Delete book?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => handleDelete(b.id)}
-                        className="bg-red-600 text-white hover:bg-red-700"
-                      >
-                        Delete
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                  }
+                  title="Delete book?"
+                  description="This action cannot be undone."
+                  confirmText="Delete"
+                  cancelText="Cancel"
+                  onConfirm={() => handleDelete(b.id)}
+                />
               </div>
             </td>
           </tr>
