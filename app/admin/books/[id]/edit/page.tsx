@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getBookById } from "@/lib/admin/actions/book";
+import { getBookById } from "@/lib/admin/actions/books";
 import BookForm from "@/components/admin/forms/BookForm";
 
 type Props = { params: { id: string } };

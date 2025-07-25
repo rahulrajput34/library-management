@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteBook } from "@/lib/admin/actions/book";
+import { deleteBook } from "@/lib/admin/actions/books";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,

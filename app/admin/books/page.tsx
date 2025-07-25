@@ -1,4 +1,4 @@
-import { listBooks } from "@/lib/admin/actions/book";
+import { listBooks } from "@/lib/admin/actions/books";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import BooksTable from "@/components/admin/BooksTable";

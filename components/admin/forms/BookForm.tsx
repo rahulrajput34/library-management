@@ -19,7 +19,7 @@ import FileUpload from "@/components/FileUpload";
 import { toast } from "sonner";
 import ColorPicker from "../ColorPicker";
 import { Textarea } from "@/components/ui/textarea";
-import { createBook, updateBook } from "@/lib/admin/actions/book";
+import { createBook, updateBook } from "@/lib/admin/actions/books";
 
 // give two type
 interface Props extends Partial<Book> {
