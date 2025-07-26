@@ -2,15 +2,9 @@
 
 import { books } from "@/database/schema";
 import { db } from "@/database/drizzle";
-import { eq } from "drizzle-orm";
+import { eq, sql, desc } from "drizzle-orm";
 import { z } from "zod";
 import { bookSchema } from "@/lib/validation";
-import { desc } from "drizzle-orm";
-
-// book list
-export async function listBooks() {
-  return db.select().from(books).orderBy(desc(books.createdAt)).limit(10);
-}
 
 // get book by id
 export async function getBookById(id: string) {
@@ -49,20 +43,25 @@ export const createBook = async (params: BookParams) => {
   }
 };
 
+// update book
 export async function updateBook(
   id: string,
   values: z.infer<typeof bookSchema>
 ) {
+  // validating the data
   const parsed = bookSchema.safeParse(values);
   if (!parsed.success) {
     return { success: false, message: "Invalid data." };
   }
 
+  // updating the book
   await db.update(books).set(parsed.data).where(eq(books.id, id));
 
-  return { success: true, message: "Book updated.", data: { id }};
+  // success
+  return { success: true, message: "Book updated.", data: { id } };
 }
 
+// delete book
 export async function deleteBook(id: string) {
   await db.delete(books).where(eq(books.id, id));
   return { success: true };
