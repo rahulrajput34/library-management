@@ -5,7 +5,7 @@ import {
   borrowRecords,
   BORROW_STATUS_ENUM,
 } from "@/database/schema";
-import { count, desc, eq, ilike, or, sql as dsql } from 'drizzle-orm';
+import { count, desc, eq, ilike, or, sql as dsql } from "drizzle-orm";
 
 export const PAGE = 10;
 
@@ -20,14 +20,13 @@ export async function listBorrowRequests(opts: {
 }) {
   const { page, q, sort } = opts;
 
-  
-const search = q
-  ? or(
-      ilike(books.title, `%${q}%`),
-      ilike(users.fullName, `%${q}%`),
-      ilike(users.email, `%${q}%`)
-    )
-  : undefined;
+  const search = q
+    ? or(
+        ilike(books.title, `%${q}%`),
+        ilike(users.fullName, `%${q}%`),
+        ilike(users.email, `%${q}%`)
+      )
+    : undefined;
 
   const data = await db
     .select({
