@@ -1,6 +1,7 @@
 import { recentBooks } from "@/lib/queries/dashboard";
 import Link from "next/link";
 import dayjs from "dayjs";
+import BookCover from "@/components/BookCover";
 
 export default async function RecentBooksWidget() {
   // fetch the most recently added books
@@ -25,11 +26,7 @@ export default async function RecentBooksWidget() {
         {books.map((b) => (
           <li key={b.id} className="flex gap-3 items-start">
             {/* book cover image */}
-            <img
-              src={b.cover}
-              alt=""
-              className="w-12 h-16 object-cover rounded"
-            />
+            <BookCover coverColor={b.color} coverImage={b.cover} variant="sm" />
             <div className="flex-1">
               {/* book title */}
               <p className="font-medium leading-snug">{b.title}</p>
