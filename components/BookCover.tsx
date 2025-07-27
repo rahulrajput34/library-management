@@ -10,8 +10,8 @@ import config from "@/lib/config";
 type Variant = "xs" | "sm" | "md" | "lg" | "xl";
 
 const SIZES: Record<Variant, string> = {
-  xs: "w-20 h-28",
-  sm: "w-24 h-32",
+  xs: "w-10 h-14",
+  sm: "w-14 h-18",
   md: "w-28 h-36",
   lg: "w-32 h-44",
   xl: "w-36 h-52",
