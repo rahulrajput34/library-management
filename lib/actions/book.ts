@@ -1,20 +1,23 @@
 "use server";
 
 import { db } from "@/database/drizzle";
-import { books, borrowRecords } from "@/database/schema";
+import { books, borrowRecords, STATUS_ENUM } from "@/database/schema";
 import { eq, and } from "drizzle-orm";
 import dayjs from "dayjs";
 import { users } from "@/database/schema";
 import { BorrowedConfirm } from "../email/BorrowedConfirm";
 
-export async function canBorrow(userId: string) {
-  const [u] = await db
+export type UserStatus = (typeof STATUS_ENUM.enumValues)[number];
+export async function getUserStatus(
+  userId: string
+): Promise<UserStatus | null> {
+  const [row] = await db
     .select({ status: users.status })
     .from(users)
     .where(eq(users.id, userId))
     .limit(1);
 
-  return u?.status === "APPROVED";
+  return row?.status ?? null;
 }
 
 // borrow Book from library
