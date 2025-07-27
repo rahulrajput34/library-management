@@ -7,6 +7,7 @@ import { generateReceipt } from "@/lib/admin/actions/borrowRequests";
 import { useState } from "react";
 import { IKImage } from "imagekitio-next";
 import config from "@/lib/config";
+import BookCover from "@/components/BookCover";
 
 export function Row({ row }: { row: BorrowRequestRow }) {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -16,16 +17,11 @@ export function Row({ row }: { row: BorrowRequestRow }) {
       {/* Book */}
       <td className="py-3">
         <div className="flex items-center gap-3">
-          {/* TODO: need to work on the size of the image */}
-          {/* <IKImage
-            path={row.bookCover}
-            urlEndpoint={config.env.imagekit.urlEndpoint}
-            alt="Student card"
-            fill
-            className="object-cover"
-            loading="lazy"
-            lqip={{ active: true }}
-          /> */}
+          <BookCover
+            coverColor={row.bookColor}
+            coverImage={row.bookCover}
+            variant="xs"
+          />
           <span className="font-medium">{row.bookTitle}</span>
         </div>
       </td>
