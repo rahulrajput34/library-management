@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 import ConfirmDialog from "../radix/ConfirmDialog";
+import BookCover from "../BookCover";
 
 type Props = { books: Book[] };
 
@@ -49,7 +50,16 @@ export default function BooksTable({ books }: Props) {
           // Single book row
           <tr key={b.id} className="border-b last:border-b-0">
             {/* Book details columns */}
-            <td className="p-3 font-medium">{b.title}</td>
+            <td className="p-3 font-medium">
+              <div className="flex items-center gap-3">
+                <BookCover
+                  coverColor={b.coverColor}
+                  coverImage={b.coverUrl}
+                  variant="xs"
+                />
+                <span className="font-medium"> {b.title}</span>
+              </div>
+            </td>
             <td className="p-3">{b.author}</td>
             <td className="p-3">{b.genre}</td>
             <td className="p-3">{b.rating}/5</td>
