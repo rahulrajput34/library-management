@@ -11,7 +11,7 @@ export default async function UserTable({
 }) {
   const { data, total } = await listUsers({ page, q });
   return (
-    <section className="bg-white dark:bg-neutral-800 shadow-sm border border-gray-200 dark:border-neutral-700 rounded-lg p-6">
+    <section className="bg-white dark:bg-neutral-800 rounded-lg p-6">
       <h2 className="text-lg font-semibold mb-4">All Users</h2>
       {/* Search bar */}
       <form className="mb-4">

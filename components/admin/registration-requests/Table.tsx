@@ -12,7 +12,7 @@ export default async function Table(props: {
   const { data, total } = await listPendingRegs(props);
 
   return (
-    <section className="bg-white dark:bg-neutral-800 shadow-sm border border-gray-200 dark:border-neutral-700 rounded-lg p-6">
+    <section className="dark:bg-neutral-800 rounded-lg p-6">
       <div className="flex items-center justify-between mb-4">
         {/* Widget title */}
         <h2 className="text-lg font-semibold">Account Registration Requests</h2>

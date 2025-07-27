@@ -19,7 +19,7 @@ export default async function Page({
 
   // render table with pagination, query, and sorting
   return (
-    <div className="mt-7 w-full overflow-x-auto">
+    <div className="w-full rounded-2xl bg-white p-7">
       <Table page={page} q={q} sort={sort} />
     </div>
   );
