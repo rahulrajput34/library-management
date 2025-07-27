@@ -5,7 +5,7 @@ import BorrowBook from "@/components/BorrowBook";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
-import { canBorrow } from "@/lib/actions/book";
+import { getUserStatus } from "@/lib/actions/book";
 
 interface Props extends Book {
   userId: string;
@@ -31,7 +31,9 @@ const BookOverview = async ({
     .where(eq(users.id, userId))
     .limit(1);
 
-  const isApproved = await canBorrow(userId);
+  let status = await getUserStatus(userId); // "APPROVED" | "PENDING" | "REJECTED" | null
+  if (status === null) status = "PENDING"; // fallback
+  const isApproved = status === "APPROVED";
 
   // check if the user is  eligible to get the book or not
   const borrowingEligibility = {
@@ -88,16 +90,22 @@ const BookOverview = async ({
 
         <p className="max-w-prose text-gray-300">{description}</p>
         {/* borrow button */}
-        {/* passing which are required for the function */}
         {user && (
           <BorrowBook
             userId={userId}
             bookId={id}
             borrowingEligibility={{
-              isEligible: isApproved,
-              message: isApproved
-                ? ""
-                : "Your account must be approved before you can borrow books.",
+              status,
+              message:
+                status === "PENDING"
+                  ? `Your account is currently under review.
+Approval typically takes 3-5 business days.
+
+Once an administrator approves your account, you will be able to borrow books.`
+                  : status === "REJECTED"
+                  ? `Your account request was unfortunately rejected.
+Borrowing is disabled. If you believe this is an error, please contact us at wattshouldiwrite@gmail.com or resubmit the required documents.`
+                  : "",
             }}
           />
         )}
