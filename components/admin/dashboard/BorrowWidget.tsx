@@ -3,6 +3,7 @@ import EmptyState from "./EmptyState";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 import dayjs from "dayjs";
+import BookCover from "@/components/BookCover";
 
 export default async function BorrowWidget() {
   // Fetch pending borrow requests
@@ -25,10 +26,10 @@ export default async function BorrowWidget() {
           {requests.map((r) => (
             <li key={r.id} className="flex gap-3 items-start">
               {/* Book cover thumbnail */}
-              <img
-                src={r.cover}
-                alt=""
-                className="w-14 h-20 object-cover rounded shrink-0"
+              <BookCover
+                coverColor={r.color}
+                coverImage={r.cover}
+                variant="sm"
               />
               <div className="flex-1">
                 {/* Book title */}
