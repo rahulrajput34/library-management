@@ -11,7 +11,7 @@ export default async function Page({
   const q = typeof searchParams.q === "string" ? searchParams.q : undefined;
 
   return (
-    <div className="p-8">
+    <div className="mt-7 w-full overflow-x-auto">
       <UserTable page={page} q={q} />
     </div>
   );

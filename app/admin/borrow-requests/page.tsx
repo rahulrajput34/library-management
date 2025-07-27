@@ -18,7 +18,7 @@ export default async function Page({
 
   // Render table with pagination, search, and sort props
   return (
-    <div className="p-8">
+    <div className="mt-7 w-full overflow-x-auto">
       <Table page={page} q={q} sort={sort} />
     </div>
   );
