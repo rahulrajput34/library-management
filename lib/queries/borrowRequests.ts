@@ -7,8 +7,10 @@ import {
 } from "@/database/schema";
 import { count, desc, eq, ilike, or, sql as dsql } from "drizzle-orm";
 
+// number of records per page
 export const PAGE = 10;
 
+// single row type
 export type BorrowRequestRow = Awaited<
   ReturnType<typeof listBorrowRequests>
 >["data"][number];
@@ -16,10 +18,12 @@ export type BorrowRequestRow = Awaited<
 export async function listBorrowRequests(opts: {
   page: number;
   q?: string;
-  sort: "asc" | "desc"; // borrow_date
+  sort: "asc" | "desc";
 }) {
+  // parse pagination, search term, and sort order
   const { page, q, sort } = opts;
 
+  // optional ILIKE filter on book title or user name/email
   const search = q
     ? or(
         ilike(books.title, `%${q}%`),
@@ -28,6 +32,7 @@ export async function listBorrowRequests(opts: {
       )
     : undefined;
 
+  // fetch paginated borrow requests joined with books and users
   const data = await db
     .select({
       id: borrowRecords.id,
@@ -35,11 +40,9 @@ export async function listBorrowRequests(opts: {
       borrowDate: borrowRecords.borrowDate,
       dueDate: borrowRecords.dueDate,
       returnDate: borrowRecords.returnDate,
-      // book
       bookId: books.id,
       bookTitle: books.title,
       bookCover: books.coverUrl,
-      // user
       userId: users.id,
       userName: users.fullName,
       userEmail: users.email,
@@ -54,12 +57,16 @@ export async function listBorrowRequests(opts: {
     .limit(PAGE)
     .offset((page - 1) * PAGE);
 
+  // count total matching records for pagination
   const [{ total }] = (
     await db.execute<{ total: number }>(
-      dsql`SELECT COUNT(*)::int AS total FROM ${borrowRecords}
-           INNER JOIN ${books} ON ${books.id} = ${borrowRecords.bookId}
-           INNER JOIN ${users} ON ${users.id} = ${borrowRecords.userId}
-           ${search ? dsql`WHERE ${search}` : dsql``}`
+      dsql`
+        SELECT COUNT(*)::int AS total
+        FROM ${borrowRecords}
+        INNER JOIN ${books} ON ${books.id} = ${borrowRecords.bookId}
+        INNER JOIN ${users} ON ${users.id} = ${borrowRecords.userId}
+        ${search ? dsql`WHERE ${search}` : dsql``}
+      `
     )
   ).rows;
 

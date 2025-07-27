@@ -6,16 +6,20 @@ export default function SelectSort(props: {
   sort: "asc" | "desc";
   q?: string;
 }) {
+  // initialize router for URL updates
   const router = useRouter();
+  // read current query parameters
   const params = useSearchParams();
 
+  // update sort param, reset page, and replace URL
   function handleChange(value: "asc" | "desc") {
     const qs = new URLSearchParams(params);
     qs.set("sort", value);
-    qs.delete("page"); // reset to first page
+    qs.delete("page");
     router.replace(`?${qs.toString()}`);
   }
 
+  // render sort order dropdown
   return (
     <select
       defaultValue={props.sort}

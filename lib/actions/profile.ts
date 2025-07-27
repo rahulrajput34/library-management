@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 
+// Schema for validating the input data for updating the profile
 const profileSchema = z.object({
   fullName: z.string().min(1, "Name is required"),
   email: z.string().email(),
@@ -22,6 +23,7 @@ const profileSchema = z.object({
     .or(z.literal("")),
 });
 
+// Function to update the profile details
 export async function updateProfile(previousState: any, formData: FormData) {
   // Validate
   const parsed = profileSchema.safeParse({

@@ -23,6 +23,7 @@ type Props = { books: Book[] };
 export default function BooksTable({ books }: Props) {
   const router = useRouter();
 
+  // Delete a book by its ID, show toast on success, then refresh the page
   const handleDelete = async (id: string) => {
     const res = await deleteBook(id);
     if (res.success) toast.success("Book deleted.");
@@ -30,6 +31,7 @@ export default function BooksTable({ books }: Props) {
   };
 
   return (
+    // Table layout for listing books
     <table className="min-w-full text-sm">
       <thead className="bg-slate-50 text-left font-semibold">
         <tr>
@@ -44,7 +46,9 @@ export default function BooksTable({ books }: Props) {
 
       <tbody>
         {books.map((b) => (
+          // Single book row
           <tr key={b.id} className="border-b last:border-b-0">
+            {/* Book details columns */}
             <td className="p-3 font-medium">{b.title}</td>
             <td className="p-3">{b.author}</td>
             <td className="p-3">{b.genre}</td>
@@ -52,6 +56,7 @@ export default function BooksTable({ books }: Props) {
             <td className="p-3">{b.createdAt?.toLocaleDateString()}</td>
             <td className="p-3">
               <div className="flex gap-3">
+                {/* Edit button linking to the edit page */}
                 <Button
                   size="icon"
                   variant="ghost"
@@ -63,6 +68,7 @@ export default function BooksTable({ books }: Props) {
                   </a>
                 </Button>
 
+                {/* Delete button wrapped in confirmation dialog */}
                 <ConfirmDialog
                   trigger={
                     <Button

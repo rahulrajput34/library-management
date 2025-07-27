@@ -13,6 +13,7 @@ export async function updateBorrowStatus(props: {
   id: string;
   status: (typeof BORROW_STATUS_ENUM.enumValues)[number];
 }) {
+  // update record and invalidate cache
   await db
     .update(borrowRecords)
     .set({ status: props.status })
@@ -21,30 +22,30 @@ export async function updateBorrowStatus(props: {
 }
 
 export async function generateReceipt(id: string) {
-  // fetch row + joins for template
+  // fetch the borrow record
   const [row] = await db
     .select({
       receiptId: borrowRecords.id,
       borrowDate: borrowRecords.borrowDate,
       dueDate: borrowRecords.dueDate,
       returnDate: borrowRecords.returnDate,
-      // book & user
+      // book & user joins would go here
     })
     .from(borrowRecords)
     .where(eq(borrowRecords.id, id))
     .limit(1);
-
   if (!row) throw new Error("Borrow record not found");
 
+  // create PDF and save to public folder
   const pdfBytes = await generateReceiptPdf({
     ...row,
     dueDate: new Date(row.dueDate),
     returnDate: row.returnDate ? new Date(row.returnDate) : null,
   });
-
   const filename = `${randomUUID()}.pdf`;
   const filePath = join(process.cwd(), "public/receipts", filename);
   await writeFile(filePath, pdfBytes);
+
   revalidatePath("/admin/borrow-requests");
   return `/receipts/${filename}`;
 }

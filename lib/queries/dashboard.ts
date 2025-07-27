@@ -3,49 +3,42 @@ import { users, books, borrowRecords } from "@/database/schema";
 import { count, desc, eq, between } from "drizzle-orm";
 import dayjs from "dayjs";
 
+// calculate date range for current and previous month
 const today = dayjs();
-
-// current month range
 const monthStart = today.startOf("month").toDate();
 const nextMonthStart = today
   .endOf("month")
   .add(1, "day")
   .startOf("day")
   .toDate();
-
-// previous month range
 const prevStart = dayjs(monthStart).subtract(1, "month").toDate();
 const prevEnd = dayjs(monthStart).subtract(1, "day").endOf("day").toDate();
 
-/* ─────────────────────────── metrics ─────────────────────────── */
+// fetch counts and month‑over‑month deltas for borrows, users, and books
 export async function fetchDashboardMetrics() {
-  /* current month */
+  // current month counts
   const [{ total: borrowNow }] = await db
     .select({ total: count() })
     .from(borrowRecords)
     .where(between(borrowRecords.borrowDate, monthStart, nextMonthStart));
-
   const [{ total: userNow }] = await db
     .select({ total: count() })
     .from(users)
     .where(between(users.createdAt, monthStart, nextMonthStart));
-
   const [{ total: bookNow }] = await db
     .select({ total: count() })
     .from(books)
     .where(between(books.createdAt, monthStart, nextMonthStart));
 
-  /* previous month */
+  // previous month counts
   const [{ total: borrowPrev }] = await db
     .select({ total: count() })
     .from(borrowRecords)
     .where(between(borrowRecords.borrowDate, prevStart, prevEnd));
-
   const [{ total: userPrev }] = await db
     .select({ total: count() })
     .from(users)
     .where(between(users.createdAt, prevStart, prevEnd));
-
   const [{ total: bookPrev }] = await db
     .select({ total: count() })
     .from(books)
@@ -58,6 +51,7 @@ export async function fetchDashboardMetrics() {
   };
 }
 
+// list most recent borrow requests still marked as BORROWED
 export async function pendingBorrowRequests(limit = 5) {
   return db
     .select({
@@ -76,6 +70,7 @@ export async function pendingBorrowRequests(limit = 5) {
     .limit(limit);
 }
 
+// list latest pending user registrations
 export async function pendingAccountRequests(limit = 6) {
   return db
     .select({
@@ -89,6 +84,7 @@ export async function pendingAccountRequests(limit = 6) {
     .limit(limit);
 }
 
+// list recently added books
 export async function recentBooks(limit = 6) {
   return db
     .select({

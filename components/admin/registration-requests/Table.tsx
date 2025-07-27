@@ -8,15 +8,19 @@ export default async function Table(props: {
   q?: string;
   sort: "asc" | "desc";
 }) {
+  // Fetch pending registration requests and total count
   const { data, total } = await listPendingRegs(props);
 
   return (
     <section className="bg-white dark:bg-neutral-800 shadow-sm border border-gray-200 dark:border-neutral-700 rounded-lg p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold">Account Registration Requests</h2>
+        {/* Widget title */}
+        <h2 className="text-lg font-semibold">Account Registration Requests</h2>
+        {/* Sort control for registration requests */}
         <BorrowSortSelect sort={props.sort} q={props.q} />
       </div>
 
+      {/* Search input for name or email */}
       <form className="mb-4">
         <input
           defaultValue={props.q}
@@ -26,18 +30,20 @@ export default async function Table(props: {
         />
       </form>
 
+      {/* Table container with horizontal scrolling */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-gray-600 uppercase text-xs">
             <tr>
               <th className="text-left py-2">Name</th>
-              <th className="text-left py-2">Date Joined</th>
-              <th className="py-2">University ID No</th>
-              <th className="py-2">University ID Card</th>
+              <th className="text-left py-2">Date Joined</th>
+              <th className="py-2">University ID No</th>
+              <th className="py-2">University ID Card</th>
               <th className="py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
+            {/* Render each registration request row */}
             {data.map((u) => (
               <Row key={u.id} row={u} />
             ))}
@@ -45,6 +51,7 @@ export default async function Table(props: {
         </table>
       </div>
 
+      {/* Pagination controls */}
       <Pagination total={total} page={props.page} pageSize={PAGE} />
     </section>
   );

@@ -7,10 +7,12 @@ import RejectDialog from "./RejectDialog";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { ikUrl } from "@/lib/utils";
 
+// Render a table row for a single registration request
 export function Row({ row }: { row: RegRow }) {
   return (
     <tr className="border-b last:border-none">
       <td className="py-3">
+        {/* Avatar and user details */}
         <div className="flex items-center gap-3">
           <AvatarCircle name={row.fullName} />
           <div className="flex flex-col">
@@ -20,10 +22,15 @@ export function Row({ row }: { row: RegRow }) {
         </div>
       </td>
       <td className="py-3">
+        {/* Registration date or placeholder */}
         {row.createdAt ? new Date(row.createdAt).toLocaleDateString() : "—"}
       </td>
-      <td className="py-3">{row.universityId}</td>
       <td className="py-3">
+        {/* University ID value */}
+        {row.universityId}
+      </td>
+      <td className="py-3">
+        {/* Link to view the uploaded ID card */}
         <a
           href={ikUrl(row.universityCard)}
           target="_blank"
@@ -33,8 +40,8 @@ export function Row({ row }: { row: RegRow }) {
           View ID Card
         </a>
       </td>
-
       <td className="py-3 flex gap-4 items-center">
+        {/* Action buttons: approve or reject the account */}
         <ApproveDialog userId={row.id} />
         <RejectDialog userId={row.id} />
       </td>

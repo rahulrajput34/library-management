@@ -5,16 +5,10 @@ import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-// These functions already send the email
 import { AccountApproved } from "@/lib/email/AccountApproved";
 import { AccountRejected } from "@/lib/email/AccountRejected";
 
-/**
- * Approve a pending user:
- *   1. sets status = "APPROVED"
- *   2. sends confirmation email
- *   3. revalidates the admin list
- */
+/** Approve user and send confirmation */
 export async function approveUser(userId: string) {
   const [user] = await db
     .update(users)
@@ -25,16 +19,10 @@ export async function approveUser(userId: string) {
   if (!user) return;
 
   await AccountApproved(user.email, user.fullName);
-
   revalidatePath("/admin/registration-requests");
 }
 
-/**
- * Reject a pending user:
- *   1. sets status = "REJECTED"
- *   2. sends rejection email
- *   3. revalidates the admin list
- */
+/** Reject user and send notification */
 export async function rejectUser(userId: string) {
   const [user] = await db
     .update(users)
@@ -45,6 +33,5 @@ export async function rejectUser(userId: string) {
   if (!user) return;
 
   await AccountRejected(user.email, user.fullName);
-
   revalidatePath("/admin/registration-requests");
 }
