@@ -59,6 +59,7 @@ export async function pendingBorrowRequests(limit = 5) {
       title: books.title,
       author: books.author,
       cover: books.coverUrl,
+      color: books.coverColor,
       borrowDate: borrowRecords.borrowDate,
       reader: users.fullName,
     })
@@ -92,6 +93,7 @@ export async function recentBooks(limit = 6) {
       title: books.title,
       author: books.author,
       cover: books.coverUrl,
+      color: books.coverColor,
       createdAt: books.createdAt,
       genre: books.genre,
     })

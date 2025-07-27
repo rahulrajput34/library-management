@@ -43,6 +43,7 @@ export async function listBorrowRequests(opts: {
       bookId: books.id,
       bookTitle: books.title,
       bookCover: books.coverUrl,
+      bookColor: books.coverColor,
       userId: users.id,
       userName: users.fullName,
       userEmail: users.email,
