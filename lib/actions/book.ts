@@ -7,10 +7,36 @@ import dayjs from "dayjs";
 import { users } from "@/database/schema";
 import { BorrowedConfirm } from "../email/BorrowedConfirm";
 
+export async function canBorrow(userId: string) {
+  const [u] = await db
+    .select({ status: users.status })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+
+  return u?.status === "APPROVED";
+}
+
 // borrow Book from library
 export const borrowBook = async (params: BorrowBookParams) => {
   // userId and bookId we get from the frontend
   const { userId, bookId } = params;
+
+  const [{ status }] = await db
+    .select({ status: users.status })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+
+  if (status !== "APPROVED") {
+    return {
+      success: false,
+      error:
+        status === "PENDING"
+          ? "Your account is awaiting admin approval."
+          : "Your borrowing privileges have been revoked.",
+    };
+  }
 
   try {
     // check if the user has already borrowed this book.
