@@ -5,6 +5,7 @@ import BorrowBook from "@/components/BorrowBook";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
+import { canBorrow } from "@/lib/actions/book";
 
 interface Props extends Book {
   userId: string;
@@ -29,6 +30,8 @@ const BookOverview = async ({
     .from(users)
     .where(eq(users.id, userId))
     .limit(1);
+
+  const isApproved = await canBorrow(userId);
 
   // check if the user is  eligible to get the book or not
   const borrowingEligibility = {
@@ -88,9 +91,14 @@ const BookOverview = async ({
         {/* passing which are required for the function */}
         {user && (
           <BorrowBook
-            bookId={id}
             userId={userId}
-            borrowingEligibility={borrowingEligibility}
+            bookId={id}
+            borrowingEligibility={{
+              isEligible: isApproved,
+              message: isApproved
+                ? ""
+                : "Your account must be approved before you can borrow books.",
+            }}
           />
         )}
       </div>
